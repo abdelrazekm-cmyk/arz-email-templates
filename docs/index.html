@@ -341,8 +341,13 @@
       document.getElementById('langBtn').textContent = isEn ? 'AR' : 'EN';
     }
     function playInline(stageEl, ytId) {
+      const isHttpsHost = location.protocol === "https:" && !!location.hostname && location.hostname !== "localhost";
+      if (!isHttpsHost) {
+        window.open("https://www.youtube.com/watch?v=" + ytId, "_blank", "noopener,noreferrer");
+        return;
+      }
       stageEl.onclick = null;
-      stageEl.innerHTML = '<iframe src="https://www.youtube.com/embed/' + ytId + '?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      stageEl.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + ytId + '?autoplay=1&rel=0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
     }
   </script>
 </body>
