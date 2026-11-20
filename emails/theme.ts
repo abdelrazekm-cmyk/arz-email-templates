@@ -1,5 +1,5 @@
 /**
- * ARZ Portfolio & ARZ Packages — Design Tokens & Featured Players (v6)
+ * ARZ Portfolio & ARZ Packages — Design Tokens & Featured Players (v7)
  * Theme: Cinematic Espresso & Honey-Amber
  */
 export const arzTheme = {
@@ -51,6 +51,8 @@ export const arzTheme = {
       id: "DiKWeWKRjUU",
       titleAr: "منارات المدينة — قصة نجاح طالب",
       titleEn: "Manarat Al-Madinah — Student Story",
+      categoryAr: "أفلام تعليمية وقصص نجاح",
+      categoryEn: "Educational Films & Student Stories",
       badgeAr: "950K+ views",
       badgeEn: "950K+ views",
       duration: "01:57",
@@ -61,8 +63,10 @@ export const arzTheme = {
       id: "wbWJ93mq67s",
       titleAr: "حفل تامر حسني — كوكاكولا أرينا دبي",
       titleEn: "Tamer Hosny — Coca-Cola Arena Dubai",
-      badgeAr: "Live Concert · Dubai",
-      badgeEn: "Live Concert · Dubai",
+      categoryAr: "حفلات كبرى وفعاليات VIP",
+      categoryEn: "Mega Concerts & Festivals",
+      badgeAr: "Dubai · 7-Day Edit",
+      badgeEn: "Dubai · 7-Day Edit",
       duration: "02:12",
       thumbUrl: "https://i.ytimg.com/vi/wbWJ93mq67s/hqdefault.jpg",
       watchUrl: "https://www.youtube.com/watch?v=wbWJ93mq67s",
@@ -70,13 +74,27 @@ export const arzTheme = {
     {
       id: "iUH9WgUy54A",
       titleAr: "تلوين DaVinci Resolve — قبل وبعد",
-      titleEn: "DaVinci Resolve — Before & After Coloring",
-      badgeAr: "Color Grading · DaVinci",
-      badgeEn: "Color Grading · DaVinci",
+      titleEn: "DaVinci Resolve — Before & After",
+      categoryAr: "تلوين سينمائي (Color Grading)",
+      categoryEn: "Color Grading Breakdowns",
+      badgeAr: "S-Log3 → Rec.709",
+      badgeEn: "S-Log3 → Rec.709",
       duration: "00:11",
       thumbUrl: "https://i.ytimg.com/vi/iUH9WgUy54A/hqdefault.jpg",
       watchUrl: "https://www.youtube.com/watch?v=iUH9WgUy54A",
     },
+  ],
+  whyUsAr: [
+    "أكتر من 500 فيديو متسلم لشركات وبراندات في مصر والسعودية والإمارات وكندا بتقييم 5.0★.",
+    "نتايج حقيقية بالأرقام: فيديو وصل لأكتر من 950K مشاهدة عضوية، وحملات تعليمية وعقارية عدّت 290K+ و100K+ مشاهدة.",
+    "تقليل وقت التسليم بنسبة 25% بنظام شغل منظم في DaVinci Resolve وAfter Effects (وتسليم سريع خلال 48–72 ساعة).",
+    "نقطة تواصل واحدة بتغطي كل حاجة (تصوير 6K، مونتاج، تلوين DaVinci، موشن جرافيك، وصوت) من غير تشتيت بين أكتر من شخص.",
+  ],
+  whyUsEn: [
+    "500+ delivered videos for brands across Egypt, Saudi Arabia, UAE, and Canada with a 5.0★ client rating.",
+    "Proven reach: 950K+ organic views on a single feature, 290K+ on recruitment campaigns, and 100K+ on Dubai real estate promos.",
+    "25% faster turnaround via standardized DaVinci Resolve & After Effects pipelines (48–72h fast delivery available).",
+    "One point of contact handling 6K shooting, editing, DaVinci color grading, motion graphics, and sound design.",
   ],
 } as const;
 

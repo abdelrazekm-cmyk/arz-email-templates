@@ -29,32 +29,26 @@ export interface StrategicClientPitchProps {
   };
 }
 
-/**
- * Simple, Natural Egyptian Arabic B2B Pitch Template (v6)
- * - Open, non-pushy positioning (flexible video formats & packages, Egypt & international clients)
- * - Full-width stacked Video Players (950K+ views Manarat, Tamer Hosny Dubai, DaVinci Coloring)
- * - Clean buttons: WhatsApp 10-min call, View All Packages, View All Work
- */
 export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
   companyName,
   contactGreeting,
   scientificProblem,
   englishSummary,
 }) => {
-  const { fonts, brand, featuredProjects } = arzTheme;
+  const { fonts, brand, featuredProjects, whyUsAr, whyUsEn } = arzTheme;
 
   const customWaUrl = `https://wa.me/201014673393?text=${encodeURIComponent(
     `أهلاً يا عبدالرازق، شفت الإيميل الخاص بـ ${companyName} وحابب نتكلم 10 دقايق بخصوص الفيديوهات.`
   )}`;
 
   const flexibleSolutionAr =
-    "نقدر نشتغل سوا على أنواع فيديوهات مختلفة حسب اللي يناسب شغلكم ويعكس القيمة الحقيقية اللي بتقدموها — من غير ما نلزمكم بشكل واحد. وعندنا باقات مختلفة تناسب كل احتياج، واشتغلنا قبل كده مع أكتر من حد جوة وبرة مصر.";
+    "نقدر نشتغل سوا على أنواع فيديوهات مختلفة حسب اللي يناسب شغلكم ويعكس القيمة الحقيقية اللي بتقدموها — من غير ما نلزمكم بشكل واحد. وعندنا باقات مختلفة تناسب كل احتياج، واشتغلنا مع شركات مختلفة في أكتر من مجال جوة وبره مصر.";
 
   const en = englishSummary ?? {
     greeting: `Hi ${companyName} team,`,
-    hook: `I checked out your work and pages — really liked what you're building. I'm Abdelrazek, a video editor and DaVinci Resolve colorist working with clients across Egypt and abroad.`,
+    hook: `I checked out your work and pages — really liked what you're building. I'm Abdelrazek, a video editor and DaVinci Resolve colorist.`,
     problem: `Most people scroll past text-heavy posts before they ever get to see the real quality behind what you offer.`,
-    solution: `We can work together on different styles of videos tailored to what fits your brand best and truly reflects the quality you deliver — with flexible packages to match any scope.`,
+    solution: `We can work together on different video styles tailored to what fits your brand best and reflects the real value you deliver — with flexible packages, backed by experience with companies across multiple industries in Egypt and abroad.`,
   };
 
   return (
@@ -65,7 +59,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
       langToggleHref="#en-version"
       langToggleLabel="EN"
     >
-      {/* ===================== ARABIC SECTION (NATURAL EGYPTIAN RTL) ===================== */}
+      {/* ===================== ARABIC SECTION (RTL) ===================== */}
       <div id="ar-version" dir="rtl" style={{ direction: "rtl", textAlign: "right" }}>
         <Heading
           as="h1"
@@ -108,12 +102,11 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
         >
           دخلت على شغلكم وصفحاتكم وعجبني اللي بتقدموه جداً. أنا عبدالرازق، شغال
           في التصوير والمونتاج وتلوين{" "}
-          <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong>، واشتغلت
-          مع أكتر من شركة وبراند جوة وبرة مصر — ولفتت نظري حاجة بسيطة تقدر تفرق
-          معاكم:
+          <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong>، ولفتت
+          نظري حاجة بسيطة تقدر تفرق معاكم:
         </Text>
 
-        {/* Clean Egyptian Arabic Problem + Open Flexible Solution Card */}
+        {/* Problem + Flexible Solution + Companies Portfolio Button */}
         <table
           role="presentation"
           width="100%"
@@ -126,19 +119,12 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             border: "1px solid #2E2318",
             borderRight: "3px solid #DB9B3E",
             borderRadius: "14px",
-            marginBottom: "28px",
+            marginBottom: "24px",
           }}
         >
           <tbody>
             <tr>
-              <td
-                dir="rtl"
-                style={{
-                  padding: "20px",
-                  direction: "rtl",
-                  textAlign: "right",
-                }}
-              >
+              <td dir="rtl" style={{ padding: "20px", direction: "rtl", textAlign: "right" }}>
                 <Text
                   style={{
                     margin: "0 0 6px",
@@ -175,7 +161,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                 </Text>
                 <Text
                   style={{
-                    margin: "0",
+                    margin: "0 0 14px",
                     fontSize: "14px",
                     lineHeight: "25px",
                     color: "#EAE2D7",
@@ -184,12 +170,81 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                 >
                   {flexibleSolutionAr}
                 </Text>
+
+                <Button
+                  href={brand.portfolioUrl}
+                  style={{
+                    backgroundColor: "#261E16",
+                    color: "#F0B45A",
+                    border: "1px solid #4A3722",
+                    fontFamily: fonts.arabic,
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    padding: "8px 16px",
+                    borderRadius: "999px",
+                    display: "inline-block",
+                  }}
+                >
+                  شوف الشركات اللي اشتغلنا معاها
+                </Button>
               </td>
             </tr>
           </tbody>
         </table>
 
-        {/* FULL-WIDTH STACKED VIDEO PLAYERS */}
+        {/* WHY US SECTION — Real CV & Portfolio Results */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{
+            width: "100%",
+            backgroundColor: "#19140E",
+            border: "1px solid #2D2218",
+            borderRadius: "14px",
+            marginBottom: "28px",
+          }}
+        >
+          <tbody>
+            <tr>
+              <td dir="rtl" style={{ padding: "20px", direction: "rtl", textAlign: "right" }}>
+                <Text
+                  style={{
+                    margin: "0 0 12px",
+                    fontSize: "15px",
+                    fontWeight: 800,
+                    color: "#F5EFE7",
+                    textAlign: "right",
+                  }}
+                >
+                  ليه إحنا مناسبين ليكم؟
+                </Text>
+                {whyUsAr.map((point, idx) => (
+                  <Text
+                    key={point}
+                    style={{
+                      margin: idx === whyUsAr.length - 1 ? "0" : "0 0 8px",
+                      fontSize: "13px",
+                      lineHeight: "23px",
+                      color: "#DDD4C8",
+                      textAlign: "right",
+                    }}
+                  >
+                    <span style={{ color: "#DB9B3E", marginLeft: "8px", fontWeight: 800 }}>
+                      ✓
+                    </span>
+                    {point}
+                  </Text>
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* FULL-WIDTH STACKED VIDEO PLAYERS WITH CATEGORIES & VIEWS */}
         <Text
           style={{
             margin: "0 0 14px",
@@ -228,11 +283,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                       alt={proj.titleAr}
                       width="564"
                       height="317"
-                      style={{
-                        width: "100%",
-                        height: "auto",
-                        display: "block",
-                      }}
+                      style={{ width: "100%", height: "auto", display: "block" }}
                     />
                   </Link>
                 </td>
@@ -246,19 +297,14 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                     borderTop: "1px solid #2B2117",
                   }}
                 >
-                  <table
-                    role="presentation"
-                    width="100%"
-                    cellPadding={0}
-                    cellSpacing={0}
-                    border={0}
-                  >
+                  <table role="presentation" width="100%" cellPadding={0} cellSpacing={0} border={0}>
                     <tbody>
                       <tr>
                         <td align="right" style={{ verticalAlign: "middle" }}>
                           <Link
                             href={proj.watchUrl}
                             style={{
+                              display: "block",
                               fontSize: "14px",
                               fontWeight: 800,
                               color: "#F5EFE7",
@@ -268,6 +314,16 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                             <span style={{ color: "#DB9B3E", marginLeft: "8px" }}>▶</span>
                             {proj.titleAr}
                           </Link>
+                          <Text
+                            style={{
+                              margin: "3px 0 0",
+                              fontSize: "11px",
+                              color: "#A89D8F",
+                              textAlign: "right",
+                            }}
+                          >
+                            {proj.categoryAr}
+                          </Text>
                         </td>
                         <td align="left" style={{ verticalAlign: "middle", whiteSpace: "nowrap" }}>
                           <span
@@ -381,43 +437,16 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
       />
 
       <div id="en-version" dir="ltr" style={{ direction: "ltr", textAlign: "left" }}>
-        <table
-          role="presentation"
-          width="100%"
-          cellPadding={0}
-          cellSpacing={0}
-          border={0}
-          style={{ width: "100%", marginBottom: "14px" }}
-        >
+        <table role="presentation" width="100%" cellPadding={0} cellSpacing={0} border={0} style={{ width: "100%", marginBottom: "14px" }}>
           <tbody>
             <tr>
               <td align="left" style={{ verticalAlign: "middle" }}>
-                <Text
-                  style={{
-                    margin: "0",
-                    fontFamily: fonts.body,
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    letterSpacing: "0.08em",
-                    color: "#DB9B3E",
-                    textAlign: "left",
-                  }}
-                >
+                <Text style={{ margin: "0", fontFamily: fonts.body, fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", color: "#DB9B3E", textAlign: "left" }}>
                   ENGLISH
                 </Text>
               </td>
               <td align="right" style={{ verticalAlign: "middle" }}>
-                <Link
-                  href="#ar-version"
-                  style={{
-                    fontFamily: fonts.body,
-                    fontSize: "12px",
-                    fontWeight: 600,
-                    letterSpacing: "0.08em",
-                    color: "#A89D8F",
-                    textDecoration: "none",
-                  }}
-                >
+                <Link href="#ar-version" style={{ fontFamily: fonts.body, fontSize: "12px", fontWeight: 600, letterSpacing: "0.08em", color: "#A89D8F", textDecoration: "none" }}>
                   AR
                 </Link>
               </td>
@@ -425,89 +454,42 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           </tbody>
         </table>
 
-        <Heading
-          as="h2"
-          style={{
-            margin: "0 0 10px",
-            fontFamily: fonts.display,
-            fontSize: "20px",
-            lineHeight: "28px",
-            fontWeight: 800,
-            color: "#F5EFE7",
-            textAlign: "left",
-          }}
-        >
+        <Heading as="h2" style={{ margin: "0 0 10px", fontFamily: fonts.display, fontSize: "20px", lineHeight: "28px", fontWeight: 800, color: "#F5EFE7", textAlign: "left" }}>
           Videos that reflect the real quality of{" "}
           <span style={{ color: "#DB9B3E" }}>{companyName}</span>
         </Heading>
 
-        <Text
-          style={{
-            margin: "0 0 10px",
-            fontFamily: fonts.body,
-            fontSize: "14px",
-            lineHeight: "22px",
-            color: "#D8CFC3",
-            textAlign: "left",
-          }}
-        >
+        <Text style={{ margin: "0 0 10px", fontFamily: fonts.body, fontSize: "14px", lineHeight: "22px", color: "#D8CFC3", textAlign: "left" }}>
           {en.greeting} {en.hook}
         </Text>
-        <Text
-          style={{
-            margin: "0 0 8px",
-            fontFamily: fonts.body,
-            fontSize: "13px",
-            lineHeight: "21px",
-            color: "#A89D8F",
-            textAlign: "left",
-          }}
-        >
+        <Text style={{ margin: "0 0 8px", fontFamily: fonts.body, fontSize: "13px", lineHeight: "21px", color: "#A89D8F", textAlign: "left" }}>
           <strong style={{ color: "#F5EFE7" }}>What I noticed:</strong> {en.problem}
         </Text>
-        <Text
-          style={{
-            margin: "0 0 16px",
-            fontFamily: fonts.body,
-            fontSize: "13px",
-            lineHeight: "21px",
-            color: "#A89D8F",
-            textAlign: "left",
-          }}
-        >
-          <strong style={{ color: "#F0B45A" }}>How we can work together:</strong>{" "}
-          {en.solution}
+        <Text style={{ margin: "0 0 14px", fontFamily: fonts.body, fontSize: "13px", lineHeight: "21px", color: "#A89D8F", textAlign: "left" }}>
+          <strong style={{ color: "#F0B45A" }}>How we can work together:</strong> {en.solution}
         </Text>
 
-        <Text
-          style={{
-            margin: "0",
-            fontFamily: fonts.body,
-            fontSize: "13px",
-            lineHeight: "22px",
-            color: "#A89D8F",
-            textAlign: "left",
-          }}
-        >
-          <Link
-            href={customWaUrl}
-            style={{ color: "#F0B45A", fontWeight: 700, textDecoration: "none" }}
-          >
+        <Text style={{ margin: "0 0 8px", fontFamily: fonts.body, fontSize: "13px", fontWeight: 700, color: "#F5EFE7", textAlign: "left" }}>
+          Why work with us:
+        </Text>
+        {whyUsEn.map((point) => (
+          <Text key={point} style={{ margin: "0 0 5px", fontFamily: fonts.body, fontSize: "12px", lineHeight: "20px", color: "#B5AA9C", textAlign: "left" }}>
+            <span style={{ color: "#DB9B3E", marginRight: "6px" }}>✓</span>
+            {point}
+          </Text>
+        ))}
+
+        <Text style={{ margin: "14px 0 0", fontFamily: fonts.body, fontSize: "13px", lineHeight: "22px", color: "#A89D8F", textAlign: "left" }}>
+          <Link href={customWaUrl} style={{ color: "#F0B45A", fontWeight: 700, textDecoration: "none" }}>
             Book a 10-min WhatsApp call
           </Link>
           &nbsp;&nbsp;·&nbsp;&nbsp;
-          <Link
-            href={brand.packagesUrl}
-            style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}
-          >
+          <Link href={brand.packagesUrl} style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}>
             View All Packages
           </Link>
           &nbsp;&nbsp;·&nbsp;&nbsp;
-          <Link
-            href={brand.portfolioUrl}
-            style={{ color: "#A89D8F", fontWeight: 700, textDecoration: "none" }}
-          >
-            View All Work
+          <Link href={brand.portfolioUrl} style={{ color: "#A89D8F", fontWeight: 700, textDecoration: "none" }}>
+            See Clients &amp; Work
           </Link>
         </Text>
       </div>
