@@ -1,6 +1,6 @@
 # ARZ Email Templates & Nodemailer Outreach Engine
 
-Responsive **React Email** templates + a one-shot **Node.js & Nodemailer** outreach engine styled to match [arz-portfolio.me](https://arz-portfolio.me/) and [arz-portfolio.me/arz-packages/](https://arz-portfolio.me/arz-packages/) (**Cinematic Espresso & Honey-Amber** design system).
+Responsive **React Email** templates + a one-shot **Node.js & Nodemailer** outreach engine styled to match [arz-portfolio.me](https://arz-portfolio.me/) and [arz-portfolio.me/arz-packages/](https://arz-portfolio.me/#pricing) (**Cinematic Espresso & Honey-Amber** design system).
 
 ## What's Inside
 

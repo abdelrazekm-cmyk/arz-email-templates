@@ -37,7 +37,7 @@ export const arzTheme = {
     locationAr: "المنصورة، مصر",
     logoMarkUrl: "https://arz-portfolio.me/assets/logo-mark.png",
     portfolioUrl: "https://arz-portfolio.me/",
-    packagesUrl: "https://arz-portfolio.me/arz-packages/",
+    packagesUrl: "https://arz-portfolio.me/#pricing",
     cvUrl: "https://arz-portfolio.me/ARZ_CV.pdf",
     email: "abdelrazekwork72@gmail.com",
     phoneDisplay: "+20 101 467 3393",
