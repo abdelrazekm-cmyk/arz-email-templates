@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARZ Email Template — Live Preview (Desktop & Mobile)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #070605; color: #F5EFE7; font-family: "Cairo", system-ui, sans-serif; }
+    .toolbar {
+      position: sticky; top: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+      padding: 12px 20px; background: rgba(18, 14, 11, 0.94); backdrop-filter: blur(12px);
+      border-bottom: 1px solid #2A2118;
+    }
+    .tb-title { font-size: 14px; font-weight: 800; color: #F0B45A; }
+    .tb-btns { display: flex; gap: 8px; }
+    .tb-btn {
+      background: #1F1812; color: #F5EFE7; border: 1px solid #3A2C1D; border-radius: 999px;
+      padding: 6px 14px; font-family: "Cairo", sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;
+    }
+    .tb-btn.active { background: #DB9B3E; color: #140E05; border-color: #DB9B3E; }
+    .stage { padding: 24px 12px 48px; display: flex; justify-content: center; }
+    .frame { width: 100%; max-width: 680px; transition: max-width 0.25s ease; }
+    .frame.mobile { max-width: 390px; }
+    .email-shell {
+      width: 100%; background: #15110D; border: 1px solid #2A2118; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+    }
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 32px; background: #120E0B; border-bottom: 1px solid #251D15;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; }
+    .brand span { font-family: "Bricolage Grotesque", sans-serif; font-size: 15px; font-weight: 800; letter-spacing: 0.08em; color: #F5EFE7; }
+    .lang-pill {
+      background: #1F1812; border: 1px solid #3D2E1E; border-radius: 999px; padding: 5px 14px;
+      font-family: "Inter", sans-serif; font-size: 11px; font-weight: 700; color: #F0B45A; text-decoration: none;
+    }
+    .pad { padding: 36px 32px 28px; }
+    .kicker { margin: 0 0 10px; font-size: 12px; font-weight: 700; color: #DB9B3E; }
+    h1 { margin: 0 0 18px; font-size: 28px; line-height: 1.38; font-weight: 800; color: #F5EFE7; }
+    .accent { color: #DB9B3E; }
+    .lead { margin: 0 0 26px; font-size: 14px; line-height: 1.85; color: #B5AA9C; }
+    .insight {
+      background: #1C1610; border: 1px solid #2F2419; border-right: 3px solid #DB9B3E;
+      border-radius: 14px; padding: 22px; margin-bottom: 30px;
+    }
+    .insight-lbl { margin: 0 0 6px; font-size: 11px; font-weight: 800; color: #DB9B3E; }
+    .insight-txt { margin: 0 0 16px; font-size: 14px; line-height: 1.75; color: #E8E0D5; }
+    .insight-impact { margin: 0; padding-top: 12px; border-top: 1px solid #2C2218; font-size: 13px; font-weight: 700; color: #F0B45A; }
+    .sec-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
+    .sec-head strong { font-size: 14px; color: #F5EFE7; }
+    .sec-head a { font-size: 12px; font-weight: 700; color: #DB9B3E; text-decoration: none; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 28px; }
+    .pcard { background: #1C1610; border: 1px solid #2D2218; border-radius: 12px; overflow: hidden; text-decoration: none; display: block; }
+    .pcard img { width: 100%; height: 104px; object-fit: cover; display: block; }
+    .pcard-body { padding: 10px 10px 12px; }
+    .pcard-badge { font-size: 10px; font-weight: 800; color: #F0B45A; margin-bottom: 4px; }
+    .pcard-title { font-size: 12px; line-height: 1.5; font-weight: 700; color: #F5EFE7; }
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); text-align: center;
+      border-top: 1px solid #261E16; border-bottom: 1px solid #261E16; padding: 14px 0; margin-bottom: 28px;
+    }
+    .stats strong { display: block; font-family: "Bricolage Grotesque", sans-serif; font-size: 19px; color: #F0B45A; }
+    .stats span { font-size: 11px; color: #8F8477; }
+    .pkg {
+      background: #1C1610; border: 1px solid #35281B; border-top: 2px solid #DB9B3E;
+      border-radius: 16px; padding: 22px 24px; margin-bottom: 28px;
+    }
+    .pkg-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+    .pkg-code { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: #DB9B3E; }
+    .pkg-name { font-size: 19px; font-weight: 800; color: #F5EFE7; }
+    .pkg-price { font-size: 21px; font-weight: 800; color: #F0B45A; text-align: left; }
+    .pkg-save { font-size: 11px; font-weight: 700; color: #8AD99B; text-align: left; }
+    .pkg-item { font-size: 13px; line-height: 1.75; color: #DDD4C8; margin: 0 0 6px; }
+    .pkg-item span { color: #DB9B3E; font-weight: 800; margin-left: 8px; }
+    .cta-wrap { text-align: center; margin-bottom: 10px; }
+    .cta-btn {
+      display: inline-block; background: #DB9B3E; color: #140E05; font-size: 15px; font-weight: 800;
+      padding: 14px 34px; border-radius: 999px; text-decoration: none;
+    }
+    .sub-links { margin: 14px 0 0; font-size: 13px; color: #A89D8F; }
+    .sub-links a { color: #F0B45A; font-weight: 700; text-decoration: none; }
+    .divider { border: 0; border-top: 1px solid #2A2118; margin: 34px 0 26px; }
+    .en-sec { direction: ltr; text-align: left; font-family: "Inter", sans-serif; }
+    .en-sec h2 { font-family: "Bricolage Grotesque", sans-serif; font-size: 21px; margin: 0 0 10px; color: #F5EFE7; }
+    .footer { padding: 24px 32px 30px; background: #120E0B; border-top: 1px solid #251D15; }
+    .frame.mobile .pad { padding: 22px 18px; }
+    .frame.mobile .topbar { padding: 16px 18px; }
+    .frame.mobile h1 { font-size: 22px; }
+    .frame.mobile .grid3 { grid-template-columns: 1fr; }
+    .frame.mobile .pcard img { height: 165px; }
+    .frame.mobile .stats { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .frame.mobile .cta-btn { display: block; width: 100%; }
+  </style>
+</head>
+<body>
+  <div class="toolbar">
+    <div class="tb-title">ARZ Email Template — Live Preview (v4 Minimal Editorial)</div>
+    <div class="tb-btns">
+      <button class="tb-btn active" id="btnDesktop" onclick="setView('desktop')">Desktop (640px)</button>
+      <button class="tb-btn" id="btnMobile" onclick="setView('mobile')">Mobile (390px)</button>
+    </div>
+  </div>
+  <div class="stage">
+    <div class="frame" id="frame">
+      <div class="email-shell">
+        <div class="topbar">
+          <a class="brand" href="https://arz-portfolio.me/" target="_blank">
+            <img src="https://arz-portfolio.me/assets/logo-mark.png" alt="ARZ" width="40" height="20" />
+            <span>ARZ</span>
+          </a>
+          <a class="lang-pill" href="#en-version">English ↓</a>
+        </div>
+        <div class="pad">
+          <div id="ar-version">
+            <p class="kicker">● برمجيات SaaS وERP</p>
+            <h1>فيديوهات <span class="accent">توقف الـ Scroll</span> — وتضاعف عملاء Namra Tech</h1>
+            <p style="margin:0 0 10px;font-size:15px;font-weight:700;">أهلاً أ. خالد رضا نمرة،</p>
+            <p class="lead">تابعت حضوركم الرقمي (منظومة getnamra.com وNamra ERP وNamra IQ — +687 عميل في 7 دول)، وكمتخصص في الإخراج والمونتاج وتلوين <strong style="color:#F5EFE7">DaVinci Resolve</strong> بالمنصورة (+500 فيديو في مصر والخليج)، لفتت نظري نقطة واحدة تقدر ترفع عائد حملاتكم بشكل فوري:</p>
+            <div class="insight">
+              <p class="insight-lbl">01 · الملاحظة البصرية</p>
+              <p class="insight-txt">الزائر التجاري يقرأ 20% فقط من النصوص، وتسجيلات الشاشة التقليدية لمنتجات ERP تفقد الانتباه خلال أول 8 ثوانٍ وتطيل دورة المبيعات في الخليج.</p>
+              <p class="insight-lbl" style="color:#F0B45A;">02 · الحل العملي</p>
+              <p class="insight-txt">فيديو UI Motion Explainer مدته 60–90 ثانية يشرح قيمة Namra ERP وNamra IQ بوضوح + 3 إعلانات أداء قصيرة مختبرة الخطافات موجهة لصناع القرار بالسعودية والخليج.</p>
+              <p class="insight-impact">النتيجة المتوقعة: رفع طلبات الـ Demo وتقليل تكلفة الاستحواذ (CPA) بنسبة 25%–40% بدون تعطيل فريقك.</p>
+            </div>
+            <div class="sec-head">
+              <strong>نماذج من أعمال ARZ</strong>
+              <a href="https://arz-portfolio.me/" target="_blank">شاهد +206 فيديو ←</a>
+            </div>
+            <div class="grid3">
+              <a class="pcard" href="https://www.youtube.com/watch?v=DiKWeWKRjUU" target="_blank">
+                <img src="https://i.ytimg.com/vi/DiKWeWKRjUU/hqdefault.jpg" alt="Manarat Al-Madinah" />
+                <div class="pcard-body">
+                  <div class="pcard-badge">▶ 950K+ مشاهدة عضوية</div>
+                  <div class="pcard-title">منارات المدينة — قصة نجاح طالب ريادي</div>
+                </div>
+              </a>
+              <a class="pcard" href="https://www.youtube.com/watch?v=wbWJ93mq67s" target="_blank">
+                <img src="https://i.ytimg.com/vi/wbWJ93mq67s/hqdefault.jpg" alt="Tamer Hosny Dubai" />
+                <div class="pcard-body">
+                  <div class="pcard-badge">▶ كوكاكولا أرينا دبي</div>
+                  <div class="pcard-title">حفل إطلاق عزيزي ميلان — تامر حسني</div>
+                </div>
+              </a>
+              <a class="pcard" href="https://www.youtube.com/watch?v=tW5LG74eo94" target="_blank">
+                <img src="https://i.ytimg.com/vi/tW5LG74eo94/hqdefault.jpg" alt="The 12 Gate 3D CGI" />
+                <div class="pcard-body">
+                  <div class="pcard-badge">▶ +100K · 3D CGI</div>
+                  <div class="pcard-title">ذا 12 جيت الرياض — تيزر عقاري</div>
+                </div>
+              </a>
+            </div>
+            <div class="stats">
+              <div><strong>500+</strong><span>فيديو مُسلَّم</span></div>
+              <div><strong>950K+</strong><span>أعلى مشاهدة</span></div>
+              <div><strong>72h</strong><span>تسليم سريع</span></div>
+              <div><strong>5.0★</strong><span>تقييم العملاء</span></div>
+            </div>
+            <div class="pkg">
+              <div class="pkg-top">
+                <div>
+                  <div class="pkg-code">الباقة الأنسب لكم · P6</div>
+                  <div class="pkg-name">باقة الإطلاق الرقمي</div>
+                </div>
+                <div>
+                  <div class="pkg-price">18,000 ج.م</div>
+                  <div class="pkg-save">توفير 47% عن القاهرة (34,000 ج.م)</div>
+                </div>
+              </div>
+              <p class="pkg-item"><span>✓</span>تنفيذ رقمي كامل بدون تصوير ميداني أو تعطيل لفريق العمل</p>
+              <p class="pkg-item"><span>✓</span>سكربت + فيديو Explainer موشن وتحريك واجهات UI (60–90 ثانية)</p>
+              <p class="pkg-item" style="margin:0;"><span>✓</span>3 إعلانات أداء قصيرة مختبرة الخطافات (A/B Hooks)</p>
+            </div>
+            <div class="cta-wrap">
+              <a class="cta-btn" href="https://wa.me/201014673393" target="_blank">احجز مكالمة 10 دقائق على واتساب ←</a>
+              <p class="sub-links">
+                <a href="https://arz-portfolio.me/arz-packages/" target="_blank">استعرض كل الباقات والحاسبة التفاعلية</a>
+                &nbsp;·&nbsp;
+                <a href="https://arz-portfolio.me/" target="_blank" style="color:#F5EFE7;">تصفح معرض الأعمال</a>
+              </p>
+            </div>
+          </div>
+
+          <hr class="divider" />
+
+          <div class="en-sec" id="en-version">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+              <span style="font-family:ui-monospace,monospace;font-size:11px;font-weight:700;letter-spacing:0.1em;color:#DB9B3E;">ENGLISH VERSION · ARZ</span>
+              <a class="lang-pill" href="#ar-version" style="font-family:'Cairo',sans-serif;">النسخة العربية ↑</a>
+            </div>
+            <h2>Videos that <span class="accent">stop the scroll</span> — for Namra Tech</h2>
+            <p style="font-size:14px;line-height:1.65;color:#D8CFC3;margin:0 0 12px;">Hi Khaled &amp; Namra Tech team, I reviewed your SaaS ecosystem (Namra ERP, Namra IQ, Namra Forge) and spotted a high-ROI way to turn GCC traffic into booked demos faster.</p>
+            <p style="font-size:13px;line-height:1.65;color:#A89D8F;margin:0 0 8px;"><strong style="color:#F5EFE7;">The Gap:</strong> Decision-makers read only ~20% of landing page text, and raw screen recordings lose retention in the first 8 seconds.</p>
+            <p style="font-size:13px;line-height:1.65;color:#A89D8F;margin:0 0 16px;"><strong style="color:#F0B45A;">The Fix:</strong> A crisp 60–90s UI Motion Explainer + 3 A/B-tested performance ads tailored for GCC buyers — zero disruption to your engineering team.</p>
+            <div style="background:#1C1610;border:1px solid #2E2318;border-radius:12px;padding:16px 18px;margin-bottom:16px;">
+              <div style="font-size:14px;font-weight:700;color:#F5EFE7;margin-bottom:8px;">Recommended: P6 — SaaS / Motion <span style="color:#F0B45A;">(18,000 EGP · Save 47% vs. Cairo)</span></div>
+              <div style="font-size:12px;color:#B5AA9C;line-height:1.7;">✓ 100% digital execution (zero on-site disruption)<br/>✓ Script + 60–90s UI Motion Explainer video<br/>✓ 3 short performance ads with A/B tested hooks</div>
+            </div>
+            <p style="font-size:13px;color:#A89D8F;margin:0;">Open to a quick 10-min chat this week? <a href="https://wa.me/201014673393" target="_blank" style="color:#F0B45A;font-weight:700;text-decoration:none;">WhatsApp me directly →</a> or explore <a href="https://arz-portfolio.me/" target="_blank" style="color:#F5EFE7;font-weight:700;text-decoration:none;">206+ projects on arz-portfolio.me</a>.</p>
+          </div>
+        </div>
+        <div class="footer">
+          <div style="font-size:15px;font-weight:800;color:#F5EFE7;margin-bottom:4px;">عبدالرازق محمود — ARZ</div>
+          <div style="font-size:12px;color:#A89D8F;margin-bottom:10px;">مونتير سينمائي · مصحح ألوان DaVinci Resolve · موشن ديزاينر · <span dir="ltr" style="color:#DB9B3E;">+20 101 467 3393</span></div>
+          <div style="font-size:12px;color:#756A5D;">
+            <a href="https://arz-portfolio.me/" target="_blank" style="color:#F5EFE7;text-decoration:none;font-weight:700;">معرض الأعمال</a> ·
+            <a href="https://arz-portfolio.me/arz-packages/" target="_blank" style="color:#F0B45A;text-decoration:none;font-weight:700;">الباقات والأسعار</a> ·
+            <a href="https://wa.me/201014673393" target="_blank" style="color:#A89D8F;text-decoration:none;">WhatsApp</a> ·
+            <a href="https://www.instagram.com/abdelrazek730/" target="_blank" style="color:#A89D8F;text-decoration:none;">Instagram</a> ·
+            <a href="https://linkedin.com/in/abdelrazek-mahmoud-a8759b308" target="_blank" style="color:#A89D8F;text-decoration:none;">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function setView(mode) {
+      document.getElementById('frame').classList.toggle('mobile', mode === 'mobile');
+      document.getElementById('btnDesktop').classList.toggle('active', mode === 'desktop');
+      document.getElementById('btnMobile').classList.toggle('active', mode === 'mobile');
+    }
+  </script>
+</body>
+</html>

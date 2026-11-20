@@ -1,7 +1,6 @@
 import * as React from "react";
 import {
   Body,
-  Column,
   Font,
   Head,
   Hr,
@@ -9,8 +8,6 @@ import {
   Img,
   Link,
   Preview,
-  Row,
-  Section,
   Text,
 } from "@react-email/components";
 import { arzTheme } from "../theme";
@@ -24,7 +21,6 @@ export interface ArzLayoutProps {
   /** Kept optional for backward compatibility with existing templates */
   formatLabel?: string;
   showAvailability?: boolean;
-  /** Optional in-email anchor button (e.g. jump to #en-version without leaving email) */
   langToggleHref?: string;
   langToggleLabel?: string;
 }
@@ -34,12 +30,10 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
   children,
   dir = "rtl",
   lang = "ar",
-  timecode = "00:01:45:00",
-  showAvailability = true,
   langToggleHref,
   langToggleLabel,
 }) => {
-  const { colors, fonts, brand } = arzTheme;
+  const { fonts, brand } = arzTheme;
   const isRtl = dir === "rtl";
   const activeBodyFont = isRtl ? fonts.arabic : fonts.body;
 
@@ -97,43 +91,44 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
             text-decoration: none;
           }
           @media only screen and (max-width: 620px) {
-            .arz-outer-pad {
+            .arz-outer {
               padding: 12px 8px !important;
             }
-            .arz-card {
+            .arz-shell {
               width: 100% !important;
               max-width: 100% !important;
+              border-radius: 16px !important;
             }
             .arz-pad {
-              padding: 20px 16px !important;
+              padding: 24px 20px !important;
             }
-            .arz-header-pad {
-              padding: 16px !important;
+            .arz-topbar {
+              padding: 16px 20px !important;
             }
             .arz-h1 {
-              font-size: 22px !important;
-              line-height: 31px !important;
+              font-size: 24px !important;
+              line-height: 34px !important;
             }
-            .arz-stack {
+            .arz-col-3, .arz-col-2 {
               display: block !important;
               width: 100% !important;
               max-width: 100% !important;
               padding-left: 0 !important;
               padding-right: 0 !important;
-              padding-bottom: 12px !important;
+              padding-bottom: 14px !important;
               box-sizing: border-box !important;
             }
-            .arz-metric-cell {
+            .arz-stat-cell {
               display: inline-block !important;
               width: 48% !important;
-              padding-bottom: 10px !important;
+              padding: 8px 0 !important;
               vertical-align: top !important;
             }
-            .arz-btn-full {
+            .arz-cta {
               display: block !important;
               width: 100% !important;
-              text-align: center !important;
               box-sizing: border-box !important;
+              text-align: center !important;
             }
             .arz-thumb {
               width: 100% !important;
@@ -146,8 +141,8 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
       <Body
         dir={dir}
         style={{
-          backgroundColor: colors.bg,
-          color: colors.text,
+          backgroundColor: "#0C0A08",
+          color: "#F5EFE7",
           fontFamily: activeBodyFont,
           margin: "0",
           padding: "0",
@@ -156,30 +151,24 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
           textAlign: isRtl ? "right" : "left",
         }}
       >
-        {/* Full-Width Fluid Outer Wrapper (prevents narrow-box bug in Gmail/Outlook) */}
         <table
           role="presentation"
           width="100%"
           cellPadding={0}
           cellSpacing={0}
           border={0}
-          style={{
-            width: "100%",
-            backgroundColor: colors.bg,
-            margin: "0",
-            padding: "0",
-          }}
+          style={{ width: "100%", backgroundColor: "#0C0A08" }}
         >
           <tbody>
             <tr>
               <td
                 align="center"
-                className="arz-outer-pad"
-                style={{ padding: "24px 12px" }}
+                className="arz-outer"
+                style={{ padding: "32px 14px" }}
               >
                 <table
                   role="presentation"
-                  className="arz-card"
+                  className="arz-shell"
                   width="640"
                   cellPadding={0}
                   cellSpacing={0}
@@ -188,101 +177,22 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                     width: "100%",
                     maxWidth: "640px",
                     margin: "0 auto",
-                    backgroundColor: colors.surface,
-                    border: `1px solid ${colors.border}`,
-                    borderRadius: "20px",
+                    backgroundColor: "#15110D",
+                    border: "1px solid #2A2118",
+                    borderRadius: "24px",
                     overflow: "hidden",
                   }}
                 >
                   <tbody>
-                    {/* Top Cinema HUD Bar — Clean "ARZ" branding + Timecode */}
+                    {/* Single Minimal Editorial Top Bar */}
                     <tr>
                       <td
-                        dir="ltr"
-                        style={{
-                          backgroundColor: colors.bgAlt,
-                          borderBottom: `1px solid ${colors.border}`,
-                          padding: "10px 22px",
-                        }}
-                      >
-                        <table
-                          role="presentation"
-                          width="100%"
-                          cellPadding={0}
-                          cellSpacing={0}
-                          border={0}
-                        >
-                          <tbody>
-                            <tr>
-                              <td align="left" style={{ verticalAlign: "middle" }}>
-                                <Text
-                                  style={{
-                                    margin: "0",
-                                    fontFamily: fonts.mono,
-                                    fontSize: "11px",
-                                    letterSpacing: "0.08em",
-                                    color: colors.muted,
-                                    direction: "ltr",
-                                    textAlign: "left",
-                                  }}
-                                >
-                                  <span style={{ color: colors.recRed }}>●</span>{" "}
-                                  REC&nbsp;·&nbsp;{timecode}&nbsp;&nbsp;
-                                  <span style={{ color: colors.dim }}>|</span>
-                                  &nbsp;&nbsp;
-                                  <strong style={{ color: colors.accent }}>
-                                    {brand.shortName}
-                                  </strong>
-                                </Text>
-                              </td>
-                              <td align="right" style={{ verticalAlign: "middle" }}>
-                                {langToggleHref && langToggleLabel ? (
-                                  <Link
-                                    href={langToggleHref}
-                                    style={{
-                                      display: "inline-block",
-                                      backgroundColor: colors.surfaceAlt,
-                                      border: `1px solid ${colors.borderStrong}`,
-                                      borderRadius: "999px",
-                                      padding: "4px 12px",
-                                      fontFamily: fonts.body,
-                                      fontSize: "11px",
-                                      fontWeight: 700,
-                                      color: colors.accentBright,
-                                      textDecoration: "none",
-                                    }}
-                                  >
-                                    {langToggleLabel}
-                                  </Link>
-                                ) : (
-                                  <Text
-                                    style={{
-                                      margin: "0",
-                                      fontFamily: fonts.mono,
-                                      fontSize: "11px",
-                                      color: colors.accent,
-                                      fontWeight: 700,
-                                    }}
-                                  >
-                                    {brand.shortName}
-                                  </Text>
-                                )}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </td>
-                    </tr>
-
-                    {/* Brand Header */}
-                    <tr>
-                      <td
-                        className="arz-header-pad"
+                        className="arz-topbar"
                         dir={dir}
                         style={{
-                          padding: "18px 24px",
-                          backgroundColor: colors.bgAlt,
-                          borderBottom: `1px solid ${colors.border}`,
+                          padding: "20px 32px",
+                          backgroundColor: "#120E0B",
+                          borderBottom: "1px solid #251D15",
                         }}
                       >
                         <table
@@ -300,16 +210,13 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                               >
                                 <Link
                                   href={brand.portfolioUrl}
-                                  style={{
-                                    textDecoration: "none",
-                                    display: "inline-block",
-                                  }}
+                                  style={{ textDecoration: "none" }}
                                 >
                                   <Img
                                     src={brand.logoMarkUrl}
                                     alt="ARZ"
-                                    width="46"
-                                    height="23"
+                                    width="40"
+                                    height="20"
                                     style={{
                                       display: "inline-block",
                                       verticalAlign: "middle",
@@ -322,51 +229,63 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                                       marginRight: isRtl ? "10px" : "0",
                                       marginLeft: isRtl ? "0" : "10px",
                                       fontFamily: fonts.display,
-                                      fontSize: "16px",
+                                      fontSize: "15px",
                                       fontWeight: 800,
-                                      color: colors.text,
-                                      letterSpacing: "0.02em",
+                                      letterSpacing: "0.08em",
+                                      color: "#F5EFE7",
                                     }}
                                   >
                                     ARZ
                                   </span>
                                 </Link>
                               </td>
-                              {showAvailability && (
-                                <td
-                                  align={isRtl ? "left" : "right"}
-                                  style={{ verticalAlign: "middle" }}
-                                >
-                                  <span
+                              <td
+                                align={isRtl ? "left" : "right"}
+                                style={{ verticalAlign: "middle" }}
+                              >
+                                {langToggleHref && langToggleLabel ? (
+                                  <Link
+                                    href={langToggleHref}
                                     style={{
                                       display: "inline-block",
-                                      backgroundColor: colors.surfaceAlt,
-                                      border: `1px solid ${colors.borderStrong}`,
+                                      backgroundColor: "#1F1812",
+                                      border: "1px solid #3D2E1E",
                                       borderRadius: "999px",
-                                      padding: "4px 11px",
-                                      fontFamily: isRtl ? fonts.arabic : fonts.body,
+                                      padding: "5px 14px",
+                                      fontFamily: fonts.body,
                                       fontSize: "11px",
-                                      color: colors.accentBright,
+                                      fontWeight: 700,
+                                      color: "#F0B45A",
+                                      textDecoration: "none",
                                     }}
                                   >
-                                    <span style={{ color: colors.liveGreen }}>●</span>{" "}
-                                    {isRtl ? "متاح لمشاريع جديدة" : "Available for projects"}
+                                    {langToggleLabel}
+                                  </Link>
+                                ) : (
+                                  <span
+                                    style={{
+                                      fontFamily: fonts.mono,
+                                      fontSize: "11px",
+                                      color: "#756A5D",
+                                    }}
+                                  >
+                                    <span style={{ color: "#E5484D" }}>●</span> REC · ARZ
                                   </span>
-                                </td>
-                              )}
+                                )}
+                              </td>
                             </tr>
                           </tbody>
                         </table>
                       </td>
                     </tr>
 
-                    {/* Main Content */}
+                    {/* Main Body */}
                     <tr>
                       <td
                         className="arz-pad"
                         dir={dir}
                         style={{
-                          padding: "28px 24px 24px",
+                          padding: "36px 32px 28px",
                           direction: dir,
                           textAlign: isRtl ? "right" : "left",
                         }}
@@ -375,13 +294,13 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                       </td>
                     </tr>
 
-                    {/* Footer Signature with Dark Mode Portrait */}
+                    {/* Minimal Signature Footer */}
                     <tr>
-                      <td style={{ padding: "0 24px" }}>
+                      <td style={{ padding: "0 32px" }}>
                         <Hr
                           style={{
-                            borderColor: colors.border,
-                            borderTop: `1px solid ${colors.border}`,
+                            borderColor: "#251D15",
+                            borderTop: "1px solid #251D15",
                             margin: "0",
                           }}
                         />
@@ -392,132 +311,82 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                         className="arz-pad"
                         dir={dir}
                         style={{
-                          padding: "22px 24px 26px",
-                          backgroundColor: colors.bgAlt,
+                          padding: "24px 32px 30px",
+                          backgroundColor: "#120E0B",
                           direction: dir,
                           textAlign: isRtl ? "right" : "left",
                         }}
                       >
-                        <Section>
-                          <Row>
-                            <Column
-                              style={{
-                                width: "64px",
-                                verticalAlign: "top",
-                                paddingLeft: isRtl ? "14px" : "0",
-                                paddingRight: isRtl ? "0" : "14px",
-                              }}
-                            >
-                              <Img
-                                src={brand.portraitDarkUrl}
-                                alt={brand.owner}
-                                width="56"
-                                height="56"
-                                style={{
-                                  width: "56px",
-                                  height: "56px",
-                                  objectFit: "cover",
-                                  borderRadius: "14px",
-                                  border: `2px solid ${colors.accent}`,
-                                  display: "block",
-                                }}
-                              />
-                            </Column>
-                            <Column
-                              align={isRtl ? "right" : "left"}
-                              style={{ verticalAlign: "top" }}
-                            >
-                              <Text
-                                style={{
-                                  margin: "0 0 2px",
-                                  fontFamily: isRtl ? fonts.arabic : fonts.display,
-                                  fontSize: "15px",
-                                  fontWeight: 800,
-                                  color: colors.text,
-                                  textAlign: isRtl ? "right" : "left",
-                                }}
-                              >
-                                {isRtl ? `${brand.ownerAr} — ARZ` : `${brand.owner} — ARZ`}
-                              </Text>
-                              <Text
-                                style={{
-                                  margin: "0 0 4px",
-                                  fontSize: "12px",
-                                  lineHeight: "18px",
-                                  color: colors.accent,
-                                  fontWeight: 700,
-                                  textAlign: isRtl ? "right" : "left",
-                                }}
-                              >
-                                {isRtl ? brand.roleAr : brand.role}
-                              </Text>
-                              <Text
-                                style={{
-                                  margin: "0 0 12px",
-                                  fontSize: "12px",
-                                  lineHeight: "18px",
-                                  color: colors.muted,
-                                  textAlign: isRtl ? "right" : "left",
-                                }}
-                              >
-                                {isRtl ? brand.locationAr : brand.location} ·{" "}
-                                <span dir="ltr">{brand.phoneDisplay}</span>
-                              </Text>
-                              <Text
-                                style={{
-                                  margin: "0",
-                                  fontSize: "12px",
-                                  lineHeight: "22px",
-                                  color: colors.dim,
-                                  textAlign: isRtl ? "right" : "left",
-                                }}
-                              >
-                                <Link
-                                  href={brand.portfolioUrl}
-                                  style={{
-                                    color: colors.text,
-                                    textDecoration: "none",
-                                    fontWeight: 700,
-                                  }}
-                                >
-                                  {isRtl ? "معرض الأعمال" : "Portfolio"}
-                                </Link>
-                                &nbsp;&nbsp;·&nbsp;&nbsp;
-                                <Link
-                                  href={brand.packagesUrl}
-                                  style={{
-                                    color: colors.accent,
-                                    textDecoration: "none",
-                                    fontWeight: 700,
-                                  }}
-                                >
-                                  {isRtl ? "الباقات والأسعار" : "Packages"}
-                                </Link>
-                                &nbsp;&nbsp;·&nbsp;&nbsp;
-                                <Link
-                                  href={brand.whatsappDirectUrl}
-                                  style={{ color: colors.muted, textDecoration: "none" }}
-                                >
-                                  WhatsApp
-                                </Link>
-                                &nbsp;&nbsp;·&nbsp;&nbsp;
-                                <Link
-                                  href={brand.instagramUrl}
-                                  style={{ color: colors.muted, textDecoration: "none" }}
-                                >
-                                  Instagram
-                                </Link>
-                                &nbsp;&nbsp;·&nbsp;&nbsp;
-                                <Link
-                                  href={brand.linkedinUrl}
-                                  style={{ color: colors.muted, textDecoration: "none" }}
-                                >
-                                  LinkedIn
-                                </Link>
-                              </Text>
-                            </Column>
-                          </Row>
-                        </Section>
+                        <Text
+                          style={{
+                            margin: "0 0 4px",
+                            fontFamily: isRtl ? fonts.arabic : fonts.display,
+                            fontSize: "15px",
+                            fontWeight: 800,
+                            color: "#F5EFE7",
+                            textAlign: isRtl ? "right" : "left",
+                          }}
+                        >
+                          {isRtl ? `${brand.ownerAr} — ARZ` : `${brand.owner} — ARZ`}
+                        </Text>
+                        <Text
+                          style={{
+                            margin: "0 0 12px",
+                            fontSize: "12px",
+                            lineHeight: "20px",
+                            color: "#A89D8F",
+                            textAlign: isRtl ? "right" : "left",
+                          }}
+                        >
+                          {isRtl ? brand.roleAr : brand.role} ·{" "}
+                          <span dir="ltr" style={{ color: "#DB9B3E" }}>
+                            {brand.phoneDisplay}
+                          </span>
+                        </Text>
+                        <Text
+                          style={{
+                            margin: "0",
+                            fontSize: "12px",
+                            lineHeight: "22px",
+                            color: "#756A5D",
+                            textAlign: isRtl ? "right" : "left",
+                          }}
+                        >
+                          <Link
+                            href={brand.portfolioUrl}
+                            style={{ color: "#F5EFE7", textDecoration: "none", fontWeight: 700 }}
+                          >
+                            {isRtl ? "معرض الأعمال" : "Portfolio"}
+                          </Link>
+                          &nbsp;&nbsp;·&nbsp;&nbsp;
+                          <Link
+                            href={brand.packagesUrl}
+                            style={{ color: "#F0B45A", textDecoration: "none", fontWeight: 700 }}
+                          >
+                            {isRtl ? "الباقات والأسعار" : "Packages"}
+                          </Link>
+                          &nbsp;&nbsp;·&nbsp;&nbsp;
+                          <Link
+                            href={brand.whatsappDirectUrl}
+                            style={{ color: "#A89D8F", textDecoration: "none" }}
+                          >
+                            WhatsApp
+                          </Link>
+                          &nbsp;&nbsp;·&nbsp;&nbsp;
+                          <Link
+                            href={brand.instagramUrl}
+                            style={{ color: "#A89D8F", textDecoration: "none" }}
+                          >
+                            Instagram
+                          </Link>
+                          &nbsp;&nbsp;·&nbsp;&nbsp;
+                          <Link
+                            href={brand.linkedinUrl}
+                            style={{ color: "#A89D8F", textDecoration: "none" }}
+                          >
+                            LinkedIn
+                          </Link>
+                        </Text>
                       </td>
                     </tr>
                   </tbody>

@@ -1,13 +1,10 @@
 import * as React from "react";
 import {
   Button,
-  Column,
   Heading,
   Hr,
   Img,
   Link,
-  Row,
-  Section,
   Text,
 } from "@react-email/components";
 import { ArzLayout } from "./components/ArzLayout";
@@ -24,7 +21,6 @@ export interface StrategicClientPitchProps {
   expectedImpact: string;
   packageId: ArzPackageSpec["id"];
   secondaryPackageId?: ArzPackageSpec["id"];
-  /** Optional concise English mirror rendered inside the same email (#en-version) */
   englishSummary?: {
     greeting: string;
     hook: string;
@@ -35,17 +31,16 @@ export interface StrategicClientPitchProps {
 }
 
 /**
- * High-converting B2B Cold Outreach Template (AIDA + PAS Hybrid)
- * - Strictly RTL Arabic top section (#ar-version)
- * - Visual Portfolio Showcase (Top 3 flagship videos: 950K+ views, Coca-Cola Arena Dubai, 3D CGI)
- * - Dark Mode creator portrait from arz-portfolio.me
- * - In-email anchor switcher to English LTR section (#en-version) without leaving the inbox
+ * Minimal Luxury Editorial B2B Pitch Template (AIDA + PAS)
+ * - Clean, breathable layout — zero clutter, zero top portrait photo
+ * - 3-column visual filmstrip portfolio showcase (stacks cleanly on mobile)
+ * - Refined espresso & gold palette matching arz-portfolio.me
+ * - Strict RTL Arabic top + In-email LTR English section (#en-version)
  */
 export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
   companyName,
   contactGreeting,
   sector,
-  trackLabel,
   digitalFootprintSummary,
   scientificProblem,
   scientificSolution,
@@ -54,7 +49,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
   secondaryPackageId,
   englishSummary,
 }) => {
-  const { colors, fonts, brand, metrics, featuredProjects } = arzTheme;
+  const { fonts, brand, metrics, featuredProjects } = arzTheme;
   const pkg = ARZ_PACKAGES[packageId];
   const secondaryPkg = secondaryPackageId ? ARZ_PACKAGES[secondaryPackageId] : null;
   const formatEgp = (n: number) => `${n.toLocaleString("en-US")} ج.م`;
@@ -66,10 +61,10 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
 
   const en = englishSummary ?? {
     greeting: `Hi ${companyName} team,`,
-    hook: `I reviewed your digital presence and spotted a high-ROI opportunity to lift watch time and inbound leads with cinema-grade video.`,
-    problem: `Static posts and generic edits lose 70%+ of viewer attention in the first 3 seconds, driving up ad costs and slowing buyer trust.`,
-    solution: `End-to-end 6K shooting (Nikon ZR + DJI RS 5), DaVinci Resolve color grading, and motion graphics — delivered fast from Mansoura with ${pkg.savePct}% savings vs. Cairo agencies.`,
-    impact: `Higher thumb-stop rate, stronger brand authority, and faster campaign turnaround (72h rush available).`,
+    hook: `I reviewed your digital presence and noticed a clear opportunity to turn more views into qualified leads with cinema-grade video.`,
+    problem: `Static posts and standard edits lose over 70% of attention in the first 3 seconds, driving up ad costs and slowing buyer trust.`,
+    solution: `End-to-end 6K shooting (Nikon ZR + DJI RS 5), DaVinci Resolve color grading, and motion graphics — delivered fast from Mansoura at ${pkg.savePct}% less than Cairo agencies.`,
+    impact: `Higher watch time, stronger brand authority, and faster 72h campaign turnarounds.`,
   };
 
   return (
@@ -77,91 +72,51 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
       dir="rtl"
       lang="ar"
       previewText={`فكرة بصرية لـ ${companyName} — ${pkg.nameAr} (توفير ${pkg.savePct}% عن القاهرة)`}
-      timecode="00:01:45:00"
       langToggleHref="#en-version"
       langToggleLabel="English ↓"
     >
-      {/* ===================== ARABIC SECTION (RTL) ===================== */}
+      {/* ===================== ARABIC EDITORIAL SECTION (RTL) ===================== */}
       <div id="ar-version" dir="rtl" style={{ direction: "rtl", textAlign: "right" }}>
-        {/* ATTENTION: Creator Intro Card with Dark Mode Photo + Sharp Hook */}
-        <Section
+        {/* Subtle Gold Kicker */}
+        <Text
           style={{
-            backgroundColor: colors.bgAlt,
-            border: `1px solid ${colors.borderStrong}`,
-            borderRadius: "16px",
-            padding: "18px 20px",
-            marginBottom: "22px",
+            margin: "0 0 10px",
+            fontFamily: fonts.arabic,
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "#DB9B3E",
+            textAlign: "right",
           }}
         >
-          <Row>
-            <Column
-              className="arz-stack"
-              style={{
-                width: "84px",
-                verticalAlign: "middle",
-                paddingLeft: "16px",
-              }}
-            >
-              <Img
-                src={brand.portraitDarkUrl}
-                alt="Abdelrazek Mahmoud — ARZ"
-                width="74"
-                height="74"
-                style={{
-                  width: "74px",
-                  height: "74px",
-                  objectFit: "cover",
-                  borderRadius: "16px",
-                  border: `2px solid ${colors.accent}`,
-                  display: "block",
-                }}
-              />
-            </Column>
-            <Column
-              className="arz-stack"
-              align="right"
-              style={{ verticalAlign: "middle", direction: "rtl", textAlign: "right" }}
-            >
-              <Text
-                style={{
-                  margin: "0 0 4px",
-                  fontFamily: fonts.arabic,
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  color: colors.accent,
-                  textAlign: "right",
-                }}
-              >
-                {trackLabel} · {sector}
-              </Text>
-              <Heading
-                as="h1"
-                className="arz-h1"
-                style={{
-                  margin: "0",
-                  fontFamily: fonts.arabic,
-                  fontSize: "23px",
-                  lineHeight: "32px",
-                  fontWeight: 800,
-                  color: colors.text,
-                  textAlign: "right",
-                }}
-              >
-                فيديوهات توقف الـ Scroll وتبيع لـ{" "}
-                <span style={{ color: colors.accent }}>{companyName}</span>
-              </Heading>
-            </Column>
-          </Row>
-        </Section>
+          ● {sector}
+        </Text>
 
-        {/* Personalized Opener */}
+        {/* Clean Editorial Display Headline (No Photo Clutter) */}
+        <Heading
+          as="h1"
+          className="arz-h1"
+          style={{
+            margin: "0 0 18px",
+            fontFamily: fonts.arabic,
+            fontSize: "28px",
+            lineHeight: "38px",
+            fontWeight: 800,
+            color: "#F5EFE7",
+            textAlign: "right",
+          }}
+        >
+          فيديوهات <span style={{ color: "#DB9B3E" }}>توقف الـ Scroll</span> —
+          وتضاعف عملاء {companyName}
+        </Heading>
+
+        {/* Warm, Direct Personal Opener */}
         <Text
           style={{
             margin: "0 0 10px",
             fontSize: "15px",
             lineHeight: "26px",
             fontWeight: 700,
-            color: colors.text,
+            color: "#F5EFE7",
             textAlign: "right",
           }}
         >
@@ -169,474 +124,570 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
         </Text>
         <Text
           style={{
-            margin: "0 0 20px",
+            margin: "0 0 26px",
             fontSize: "14px",
-            lineHeight: "25px",
-            color: colors.muted,
+            lineHeight: "26px",
+            color: "#B5AA9C",
             textAlign: "right",
           }}
         >
-          أثناء مراجعتي لحضوركم الرقمي ({digitalFootprintSummary}) لاحظت فرصة
-          مباشرة لمضاعفة العائد من المحتوى المرئي بدون تكلفة شركات القاهرة:
+          تابعت حضوركم الرقمي ({digitalFootprintSummary})، وكمتخصص في الإخراج
+          والمونتاج وتلوين <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong>{" "}
+          بالمنصورة (+500 فيديو في مصر والخليج)، لفتت نظري نقطة واحدة تقدر ترفع
+          عائد حملاتكم بشكل فوري:
         </Text>
 
-        {/* INTEREST (PAS): Problem + Scientific Solution */}
-        <Section
+        {/* Single Refined Editorial Insight Card (No Loud Red/Green Boxes) */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
           style={{
-            backgroundColor: colors.problemBg,
-            border: `1px solid ${colors.problemBorder}`,
-            borderRight: `4px solid ${colors.recRed}`,
+            width: "100%",
+            backgroundColor: "#1C1610",
+            border: "1px solid #2F2419",
+            borderRight: "3px solid #DB9B3E",
             borderRadius: "14px",
-            padding: "16px 18px",
-            marginBottom: "12px",
+            marginBottom: "30px",
           }}
         >
-          <Text
-            style={{
-              margin: "0 0 5px",
-              fontSize: "12px",
-              fontWeight: 800,
-              color: "#F38B82",
-              textAlign: "right",
-            }}
-          >
-            التحدي الحالي
-          </Text>
-          <Text
-            style={{
-              margin: "0",
-              fontSize: "14px",
-              lineHeight: "24px",
-              color: colors.text,
-              textAlign: "right",
-            }}
-          >
-            {scientificProblem}
-          </Text>
-        </Section>
-
-        <Section
-          style={{
-            backgroundColor: colors.solutionBg,
-            border: `1px solid ${colors.solutionBorder}`,
-            borderRight: `4px solid ${colors.liveGreen}`,
-            borderRadius: "14px",
-            padding: "16px 18px",
-            marginBottom: "24px",
-          }}
-        >
-          <Text
-            style={{
-              margin: "0 0 5px",
-              fontSize: "12px",
-              fontWeight: 800,
-              color: "#7CE393",
-              textAlign: "right",
-            }}
-          >
-            الحل العملي والنتيجة المتوقعة
-          </Text>
-          <Text
-            style={{
-              margin: "0 0 8px",
-              fontSize: "14px",
-              lineHeight: "24px",
-              color: colors.text,
-              textAlign: "right",
-            }}
-          >
-            {scientificSolution}
-          </Text>
-          <Text
-            style={{
-              margin: "0",
-              fontSize: "13px",
-              lineHeight: "22px",
-              color: colors.accentBright,
-              fontWeight: 700,
-              textAlign: "right",
-            }}
-          >
-            ← {expectedImpact}
-          </Text>
-        </Section>
-
-        {/* DESIRE: Visual ARZ Portfolio Showcase (Top 3 Projects from Website) */}
-        <Section style={{ marginBottom: "24px" }}>
-          <Row style={{ marginBottom: "12px" }}>
-            <Column align="right">
-              <Text
+          <tbody>
+            <tr>
+              <td
+                dir="rtl"
                 style={{
-                  margin: "0",
-                  fontSize: "12px",
-                  fontWeight: 800,
-                  color: colors.accent,
+                  padding: "22px 22px 20px",
+                  direction: "rtl",
                   textAlign: "right",
                 }}
               >
-                معرض الأعمال — نماذج حقيقية من تنفيذ ARZ
-              </Text>
-            </Column>
-            <Column align="left">
-              <Link
-                href={brand.portfolioUrl}
-                style={{
-                  fontSize: "12px",
-                  fontWeight: 700,
-                  color: colors.accentBright,
-                  textDecoration: "underline",
-                }}
-              >
-                عرض +206 فيديو ←
-              </Link>
-            </Column>
-          </Row>
-
-          {/* 3 Clickable Video Cards */}
-          {featuredProjects.map((proj, idx) => (
-            <Section
-              key={proj.id}
-              style={{
-                backgroundColor: colors.bgAlt,
-                border: `1px solid ${colors.border}`,
-                borderRadius: "14px",
-                padding: "12px",
-                marginBottom: idx === featuredProjects.length - 1 ? "0" : "10px",
-              }}
-            >
-              <Row>
-                <Column
-                  className="arz-stack"
-                  style={{
-                    width: "156px",
-                    verticalAlign: "middle",
-                    paddingLeft: "14px",
-                  }}
-                >
-                  <Link href={proj.watchUrl} style={{ textDecoration: "none" }}>
-                    <Img
-                      className="arz-thumb"
-                      src={proj.thumbUrl}
-                      alt={proj.titleAr}
-                      width="150"
-                      height="85"
-                      style={{
-                        width: "150px",
-                        height: "85px",
-                        objectFit: "cover",
-                        borderRadius: "10px",
-                        border: `1px solid ${colors.borderStrong}`,
-                        display: "block",
-                      }}
-                    />
-                  </Link>
-                </Column>
-                <Column
-                  className="arz-stack"
-                  align="right"
-                  style={{ verticalAlign: "middle", textAlign: "right" }}
-                >
-                  <Text
-                    style={{
-                      margin: "0 0 4px",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      color: colors.accentBright,
-                      textAlign: "right",
-                    }}
-                  >
-                    ▶ {proj.badgeAr} · {proj.categoryAr}
-                  </Text>
-                  <Link
-                    href={proj.watchUrl}
-                    style={{
-                      display: "block",
-                      fontSize: "14px",
-                      lineHeight: "21px",
-                      fontWeight: 700,
-                      color: colors.text,
-                      textDecoration: "none",
-                      marginBottom: "6px",
-                      textAlign: "right",
-                    }}
-                  >
-                    {proj.titleAr}
-                  </Link>
-                  <Link
-                    href={proj.watchUrl}
-                    style={{
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: colors.accent,
-                      textDecoration: "none",
-                    }}
-                  >
-                    شاهد الفيديو الآن ←
-                  </Link>
-                </Column>
-              </Row>
-            </Section>
-          ))}
-        </Section>
-
-        {/* Proof Metrics Strip */}
-        <Section
-          style={{
-            backgroundColor: colors.bgAlt,
-            border: `1px solid ${colors.border}`,
-            borderRadius: "14px",
-            padding: "14px 8px",
-            marginBottom: "22px",
-          }}
-        >
-          <Row>
-            {metrics.map((m) => (
-              <Column
-                key={m.label}
-                className="arz-metric-cell"
-                align="center"
-                style={{ width: "25%", textAlign: "center" }}
-              >
                 <Text
                   style={{
-                    margin: "0 0 2px",
-                    fontFamily: fonts.display,
-                    fontSize: "18px",
+                    margin: "0 0 6px",
+                    fontSize: "11px",
                     fontWeight: 800,
-                    color: colors.accentBright,
-                    textAlign: "center",
+                    color: "#DB9B3E",
+                    textAlign: "right",
                   }}
                 >
-                  {m.value}
+                  01 · الملاحظة البصرية
                 </Text>
+                <Text
+                  style={{
+                    margin: "0 0 16px",
+                    fontSize: "14px",
+                    lineHeight: "24px",
+                    color: "#E8E0D5",
+                    textAlign: "right",
+                  }}
+                >
+                  {scientificProblem}
+                </Text>
+
+                <Text
+                  style={{
+                    margin: "0 0 6px",
+                    fontSize: "11px",
+                    fontWeight: 800,
+                    color: "#F0B45A",
+                    textAlign: "right",
+                  }}
+                >
+                  02 · الحل العملي
+                </Text>
+                <Text
+                  style={{
+                    margin: "0 0 14px",
+                    fontSize: "14px",
+                    lineHeight: "24px",
+                    color: "#E8E0D5",
+                    textAlign: "right",
+                  }}
+                >
+                  {scientificSolution}
+                </Text>
+
                 <Text
                   style={{
                     margin: "0",
-                    fontSize: "11px",
-                    color: colors.muted,
+                    paddingTop: "12px",
+                    borderTop: "1px solid #2C2218",
+                    fontSize: "13px",
+                    lineHeight: "22px",
+                    fontWeight: 700,
+                    color: "#F0B45A",
+                    textAlign: "right",
+                  }}
+                >
+                  النتيجة المتوقعة: {expectedImpact}
+                </Text>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* PORTFOLIO FILMSTRIP SHOWCASE (Clean 3-Column Editorial Grid) */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{ width: "100%", marginBottom: "14px" }}
+        >
+          <tbody>
+            <tr>
+              <td align="right" style={{ verticalAlign: "baseline" }}>
+                <Text
+                  style={{
+                    margin: "0",
+                    fontSize: "14px",
+                    fontWeight: 800,
+                    color: "#F5EFE7",
+                    textAlign: "right",
+                  }}
+                >
+                  نماذج من أعمال ARZ
+                </Text>
+              </td>
+              <td align="left" style={{ verticalAlign: "baseline" }}>
+                <Link
+                  href={brand.portfolioUrl}
+                  style={{
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    color: "#DB9B3E",
+                    textDecoration: "none",
+                  }}
+                >
+                  شاهد +206 فيديو ←
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{ width: "100%", marginBottom: "28px" }}
+        >
+          <tbody>
+            <tr>
+              {featuredProjects.map((proj, idx) => (
+                <td
+                  key={proj.id}
+                  className="arz-col-3"
+                  valign="top"
+                  style={{
+                    width: "33.33%",
+                    paddingLeft: idx === featuredProjects.length - 1 ? "0" : "8px",
+                    paddingRight: idx === 0 ? "0" : "4px",
+                    verticalAlign: "top",
+                  }}
+                >
+                  <table
+                    role="presentation"
+                    width="100%"
+                    cellPadding={0}
+                    cellSpacing={0}
+                    border={0}
+                    style={{
+                      width: "100%",
+                      backgroundColor: "#1C1610",
+                      border: "1px solid #2D2218",
+                      borderRadius: "12px",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <tbody>
+                      <tr>
+                        <td>
+                          <Link href={proj.watchUrl} style={{ textDecoration: "none" }}>
+                            <Img
+                              className="arz-thumb"
+                              src={proj.thumbUrl}
+                              alt={proj.titleAr}
+                              width="180"
+                              height="102"
+                              style={{
+                                width: "100%",
+                                height: "102px",
+                                objectFit: "cover",
+                                display: "block",
+                              }}
+                            />
+                          </Link>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          dir="rtl"
+                          style={{
+                            padding: "10px 10px 12px",
+                            direction: "rtl",
+                            textAlign: "right",
+                          }}
+                        >
+                          <Text
+                            style={{
+                              margin: "0 0 4px",
+                              fontSize: "10px",
+                              fontWeight: 800,
+                              color: "#F0B45A",
+                              textAlign: "right",
+                            }}
+                          >
+                            ▶ {proj.badgeAr}
+                          </Text>
+                          <Link
+                            href={proj.watchUrl}
+                            style={{
+                              display: "block",
+                              fontSize: "12px",
+                              lineHeight: "18px",
+                              fontWeight: 700,
+                              color: "#F5EFE7",
+                              textDecoration: "none",
+                              textAlign: "right",
+                            }}
+                          >
+                            {proj.titleAr}
+                          </Link>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Minimal Hairline Proof Strip */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{
+            width: "100%",
+            borderTop: "1px solid #261E16",
+            borderBottom: "1px solid #261E16",
+            marginBottom: "28px",
+          }}
+        >
+          <tbody>
+            <tr>
+              {metrics.map((m) => (
+                <td
+                  key={m.label}
+                  className="arz-stat-cell"
+                  align="center"
+                  style={{ width: "25%", padding: "14px 4px", textAlign: "center" }}
+                >
+                  <Text
+                    style={{
+                      margin: "0 0 2px",
+                      fontFamily: fonts.display,
+                      fontSize: "18px",
+                      fontWeight: 800,
+                      color: "#F0B45A",
+                      textAlign: "center",
+                    }}
+                  >
+                    {m.value}
+                  </Text>
+                  <Text
+                    style={{
+                      margin: "0",
+                      fontSize: "11px",
+                      color: "#8F8477",
+                      textAlign: "center",
+                    }}
+                  >
+                    {m.labelAr}
+                  </Text>
+                </td>
+              ))}
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Luxury Minimal Package Block */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{
+            width: "100%",
+            backgroundColor: "#1C1610",
+            border: "1px solid #35281B",
+            borderTop: "2px solid #DB9B3E",
+            borderRadius: "16px",
+            marginBottom: "28px",
+          }}
+        >
+          <tbody>
+            <tr>
+              <td
+                dir="rtl"
+                style={{
+                  padding: "22px 24px",
+                  direction: "rtl",
+                  textAlign: "right",
+                }}
+              >
+                <table
+                  role="presentation"
+                  width="100%"
+                  cellPadding={0}
+                  cellSpacing={0}
+                  border={0}
+                  style={{ width: "100%", marginBottom: "14px" }}
+                >
+                  <tbody>
+                    <tr>
+                      <td className="arz-col-2" align="right" style={{ verticalAlign: "top" }}>
+                        <Text
+                          style={{
+                            margin: "0 0 2px",
+                            fontFamily: fonts.mono,
+                            fontSize: "11px",
+                            fontWeight: 700,
+                            color: "#DB9B3E",
+                            textAlign: "right",
+                          }}
+                        >
+                          الباقة الأنسب لكم · {pkg.id}
+                        </Text>
+                        <Text
+                          style={{
+                            margin: "0",
+                            fontSize: "19px",
+                            fontWeight: 800,
+                            color: "#F5EFE7",
+                            textAlign: "right",
+                          }}
+                        >
+                          {pkg.nameAr}
+                        </Text>
+                      </td>
+                      <td className="arz-col-2" align="left" style={{ verticalAlign: "top" }}>
+                        <Text
+                          style={{
+                            margin: "0",
+                            fontSize: "21px",
+                            fontWeight: 800,
+                            color: "#F0B45A",
+                            textAlign: "left",
+                          }}
+                        >
+                          {formatEgp(pkg.priceEgp)}
+                        </Text>
+                        <Text
+                          style={{
+                            margin: "2px 0 0",
+                            fontSize: "11px",
+                            fontWeight: 700,
+                            color: "#8AD99B",
+                            textAlign: "left",
+                          }}
+                        >
+                          توفير {pkg.savePct}% عن القاهرة ({formatEgp(pkg.cairoAvgEgp)})
+                        </Text>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                {pkg.deliverablesAr.map((item, idx) => (
+                  <Text
+                    key={item}
+                    style={{
+                      margin: idx === pkg.deliverablesAr.length - 1 ? "0" : "0 0 8px",
+                      fontSize: "13px",
+                      lineHeight: "22px",
+                      color: "#DDD4C8",
+                      textAlign: "right",
+                    }}
+                  >
+                    <span style={{ color: "#DB9B3E", marginLeft: "8px", fontWeight: 800 }}>
+                      ✓
+                    </span>
+                    {item}
+                  </Text>
+                ))}
+
+                {secondaryPkg && (
+                  <Text
+                    style={{
+                      margin: "14px 0 0",
+                      paddingTop: "12px",
+                      borderTop: "1px solid #2B2117",
+                      fontSize: "12px",
+                      color: "#A89D8F",
+                      textAlign: "right",
+                    }}
+                  >
+                    خيار إضافي للتوسع:{" "}
+                    <strong style={{ color: "#F0B45A" }}>
+                      {secondaryPkg.nameAr} ({secondaryPkg.id}) —{" "}
+                      {formatEgp(secondaryPkg.priceEgp)}
+                    </strong>
+                  </Text>
+                )}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        {/* Single Crisp Primary CTA */}
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{ width: "100%", marginBottom: "8px" }}
+        >
+          <tbody>
+            <tr>
+              <td align="center" style={{ textAlign: "center" }}>
+                <Button
+                  className="arz-cta"
+                  href={customWaUrl}
+                  style={{
+                    backgroundColor: "#DB9B3E",
+                    color: "#140E05",
+                    fontFamily: fonts.arabic,
+                    fontSize: "15px",
+                    fontWeight: 800,
+                    textDecoration: "none",
+                    padding: "14px 34px",
+                    borderRadius: "999px",
+                    display: "inline-block",
+                  }}
+                >
+                  احجز مكالمة 10 دقائق على واتساب ←
+                </Button>
+                <Text
+                  style={{
+                    margin: "14px 0 0",
+                    fontSize: "13px",
+                    color: "#A89D8F",
                     textAlign: "center",
                   }}
                 >
-                  {m.labelAr}
+                  <Link
+                    href={brand.packagesUrl}
+                    style={{ color: "#F0B45A", fontWeight: 700, textDecoration: "none" }}
+                  >
+                    استعرض كل الباقات والحاسبة التفاعلية
+                  </Link>
+                  &nbsp;&nbsp;·&nbsp;&nbsp;
+                  <Link
+                    href={brand.portfolioUrl}
+                    style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}
+                  >
+                    تصفح معرض الأعمال
+                  </Link>
                 </Text>
-              </Column>
-            ))}
-          </Row>
-        </Section>
-
-        {/* OFFER: Matched Package Card */}
-        <Section
-          style={{
-            backgroundColor: colors.surfaceAlt,
-            border: `1px solid ${colors.borderStrong}`,
-            borderRadius: "16px",
-            padding: "20px",
-            marginBottom: "22px",
-          }}
-        >
-          <Row style={{ marginBottom: "12px" }}>
-            <Column className="arz-stack" align="right" style={{ textAlign: "right" }}>
-              <Text
-                style={{
-                  margin: "0 0 3px",
-                  fontFamily: fonts.mono,
-                  fontSize: "11px",
-                  fontWeight: 700,
-                  color: colors.accent,
-                  textAlign: "right",
-                }}
-              >
-                الباقة الأنسب لكم · {pkg.id}
-              </Text>
-              <Text
-                style={{
-                  margin: "0",
-                  fontSize: "18px",
-                  fontWeight: 800,
-                  color: colors.text,
-                  textAlign: "right",
-                }}
-              >
-                {pkg.nameAr}
-              </Text>
-            </Column>
-            <Column className="arz-stack" align="left" style={{ textAlign: "left" }}>
-              <Text
-                style={{
-                  margin: "0",
-                  fontSize: "20px",
-                  fontWeight: 800,
-                  color: colors.accentBright,
-                  textAlign: "left",
-                }}
-              >
-                {formatEgp(pkg.priceEgp)}
-              </Text>
-              <Text
-                style={{
-                  margin: "2px 0 0",
-                  fontSize: "11px",
-                  color: "#7CE393",
-                  fontWeight: 700,
-                  textAlign: "left",
-                }}
-              >
-                توفير {pkg.savePct}% عن القاهرة ({formatEgp(pkg.cairoAvgEgp)})
-              </Text>
-            </Column>
-          </Row>
-
-          {pkg.deliverablesAr.map((item, idx) => (
-            <Text
-              key={item}
-              style={{
-                margin: idx === pkg.deliverablesAr.length - 1 ? "0" : "0 0 8px",
-                padding: "9px 12px",
-                backgroundColor: colors.bgAlt,
-                border: `1px solid ${colors.border}`,
-                borderRadius: "10px",
-                fontSize: "13px",
-                lineHeight: "20px",
-                color: colors.text,
-                textAlign: "right",
-              }}
-            >
-              <span style={{ color: colors.accent, marginLeft: "8px" }}>✓</span>
-              {item}
-            </Text>
-          ))}
-
-          {secondaryPkg && (
-            <Text
-              style={{
-                margin: "12px 0 0",
-                fontSize: "12px",
-                color: colors.muted,
-                textAlign: "right",
-              }}
-            >
-              <strong style={{ color: colors.accentBright }}>بديل للتوسع:</strong>{" "}
-              {secondaryPkg.nameAr} ({secondaryPkg.id}) — {formatEgp(secondaryPkg.priceEgp)}
-            </Text>
-          )}
-        </Section>
-
-        {/* ACTION: Single Primary Low-Friction CTA + Subtle Secondary Link */}
-        <Section style={{ textAlign: "center", marginBottom: "14px" }}>
-          <Button
-            className="arz-btn-full"
-            href={customWaUrl}
-            style={{
-              backgroundColor: colors.accent,
-              color: colors.accentInk,
-              fontFamily: fonts.arabic,
-              fontSize: "15px",
-              fontWeight: 800,
-              textDecoration: "none",
-              padding: "14px 30px",
-              borderRadius: "999px",
-              display: "inline-block",
-            }}
-          >
-            احجز مكالمة 10 دقائق على واتساب ←
-          </Button>
-          <Text
-            style={{
-              margin: "12px 0 0",
-              fontSize: "13px",
-              color: colors.muted,
-              textAlign: "center",
-            }}
-          >
-            أو استعرض{" "}
-            <Link
-              href={brand.packagesUrl}
-              style={{ color: colors.accentBright, fontWeight: 700, textDecoration: "underline" }}
-            >
-              حاسبة الباقات التفاعلية
-            </Link>{" "}
-            ·{" "}
-            <Link
-              href={brand.portfolioUrl}
-              style={{ color: colors.text, fontWeight: 700, textDecoration: "underline" }}
-            >
-              معرض الأعمال الكامل
-            </Link>
-          </Text>
-        </Section>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
-      {/* ===================== IN-EMAIL ENGLISH SECTION (LTR) ===================== */}
+      {/* ===================== IN-EMAIL ENGLISH VERSION (LTR) ===================== */}
       <Hr
         style={{
-          borderColor: colors.borderStrong,
-          borderTop: `1px dashed ${colors.borderStrong}`,
-          margin: "28px 0 22px",
+          borderColor: "#2A2118",
+          borderTop: "1px solid #2A2118",
+          margin: "34px 0 26px",
         }}
       />
 
       <div id="en-version" dir="ltr" style={{ direction: "ltr", textAlign: "left" }}>
-        <Row style={{ marginBottom: "14px" }}>
-          <Column align="left" style={{ verticalAlign: "middle" }}>
-            <Text
-              style={{
-                margin: "0",
-                fontFamily: fonts.mono,
-                fontSize: "11px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                color: colors.accent,
-                textTransform: "uppercase",
-                textAlign: "left",
-              }}
-            >
-              ENGLISH VERSION · ARZ
-            </Text>
-          </Column>
-          <Column align="right" style={{ verticalAlign: "middle" }}>
-            <Link
-              href="#ar-version"
-              style={{
-                display: "inline-block",
-                backgroundColor: colors.surfaceAlt,
-                border: `1px solid ${colors.borderStrong}`,
-                borderRadius: "999px",
-                padding: "4px 12px",
-                fontFamily: fonts.arabic,
-                fontSize: "11px",
-                fontWeight: 700,
-                color: colors.accentBright,
-                textDecoration: "none",
-              }}
-            >
-              النسخة العربية ↑
-            </Link>
-          </Column>
-        </Row>
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
+          style={{ width: "100%", marginBottom: "16px" }}
+        >
+          <tbody>
+            <tr>
+              <td align="left" style={{ verticalAlign: "middle" }}>
+                <Text
+                  style={{
+                    margin: "0",
+                    fontFamily: fonts.mono,
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    letterSpacing: "0.1em",
+                    color: "#DB9B3E",
+                    textAlign: "left",
+                  }}
+                >
+                  ENGLISH VERSION · ARZ
+                </Text>
+              </td>
+              <td align="right" style={{ verticalAlign: "middle" }}>
+                <Link
+                  href="#ar-version"
+                  style={{
+                    display: "inline-block",
+                    backgroundColor: "#1F1812",
+                    border: "1px solid #3D2E1E",
+                    borderRadius: "999px",
+                    padding: "4px 12px",
+                    fontFamily: fonts.arabic,
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    color: "#F0B45A",
+                    textDecoration: "none",
+                  }}
+                >
+                  النسخة العربية ↑
+                </Link>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         <Heading
           as="h2"
           style={{
             margin: "0 0 10px",
             fontFamily: fonts.display,
-            fontSize: "20px",
-            lineHeight: "28px",
+            fontSize: "21px",
+            lineHeight: "29px",
             fontWeight: 800,
-            color: colors.text,
+            color: "#F5EFE7",
             textAlign: "left",
           }}
         >
-          Scroll-stopping video production for{" "}
-          <span style={{ color: colors.accent }}>{companyName}</span>
+          Videos that <span style={{ color: "#DB9B3E" }}>stop the scroll</span>{" "}
+          — for {companyName}
         </Heading>
 
         <Text
           style={{
-            margin: "0 0 10px",
+            margin: "0 0 12px",
             fontFamily: fonts.body,
             fontSize: "14px",
-            lineHeight: "22px",
-            color: colors.text,
+            lineHeight: "23px",
+            color: "#D8CFC3",
             textAlign: "left",
           }}
         >
@@ -649,91 +700,101 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             fontFamily: fonts.body,
             fontSize: "13px",
             lineHeight: "21px",
-            color: colors.muted,
+            color: "#A89D8F",
             textAlign: "left",
           }}
         >
-          <strong style={{ color: "#F38B82" }}>The Bottleneck:</strong> {en.problem}
+          <strong style={{ color: "#F5EFE7" }}>The Gap:</strong> {en.problem}
         </Text>
 
         <Text
           style={{
-            margin: "0 0 14px",
+            margin: "0 0 18px",
             fontFamily: fonts.body,
             fontSize: "13px",
             lineHeight: "21px",
-            color: colors.muted,
+            color: "#A89D8F",
             textAlign: "left",
           }}
         >
-          <strong style={{ color: "#7CE393" }}>The Fix:</strong> {en.solution}{" "}
-          <strong style={{ color: colors.accentBright }}>{en.impact}</strong>
+          <strong style={{ color: "#F0B45A" }}>The Fix:</strong> {en.solution}{" "}
+          {en.impact}
         </Text>
 
-        {/* Compact English Package Box */}
-        <Section
+        <table
+          role="presentation"
+          width="100%"
+          cellPadding={0}
+          cellSpacing={0}
+          border={0}
           style={{
-            backgroundColor: colors.bgAlt,
-            border: `1px solid ${colors.border}`,
-            borderRadius: "14px",
-            padding: "14px 16px",
+            width: "100%",
+            backgroundColor: "#1C1610",
+            border: "1px solid #2E2318",
+            borderRadius: "12px",
             marginBottom: "16px",
           }}
         >
-          <Text
-            style={{
-              margin: "0 0 8px",
-              fontFamily: fonts.display,
-              fontSize: "14px",
-              fontWeight: 700,
-              color: colors.text,
-              textAlign: "left",
-            }}
-          >
-            Recommended: {pkg.id} — {pkg.nameEn}{" "}
-            <span style={{ color: colors.accentBright }}>
-              ({formatEgpEn(pkg.priceEgp)} · Save {pkg.savePct}% vs. Cairo)
-            </span>
-          </Text>
-          {pkg.deliverablesEn.map((item) => (
-            <Text
-              key={item}
-              style={{
-                margin: "0 0 4px",
-                fontFamily: fonts.body,
-                fontSize: "12px",
-                lineHeight: "19px",
-                color: colors.muted,
-                textAlign: "left",
-              }}
-            >
-              <span style={{ color: colors.accent, marginRight: "6px" }}>✓</span>
-              {item}
-            </Text>
-          ))}
-        </Section>
+          <tbody>
+            <tr>
+              <td dir="ltr" style={{ padding: "16px 18px", textAlign: "left" }}>
+                <Text
+                  style={{
+                    margin: "0 0 8px",
+                    fontFamily: fonts.display,
+                    fontSize: "14px",
+                    fontWeight: 700,
+                    color: "#F5EFE7",
+                    textAlign: "left",
+                  }}
+                >
+                  Recommended: {pkg.id} — {pkg.nameEn}{" "}
+                  <span style={{ color: "#F0B45A" }}>
+                    ({formatEgpEn(pkg.priceEgp)} · Save {pkg.savePct}% vs. Cairo)
+                  </span>
+                </Text>
+                {pkg.deliverablesEn.map((item) => (
+                  <Text
+                    key={item}
+                    style={{
+                      margin: "0 0 4px",
+                      fontFamily: fonts.body,
+                      fontSize: "12px",
+                      lineHeight: "19px",
+                      color: "#B5AA9C",
+                      textAlign: "left",
+                    }}
+                  >
+                    <span style={{ color: "#DB9B3E", marginRight: "6px" }}>✓</span>
+                    {item}
+                  </Text>
+                ))}
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
         <Text
           style={{
             margin: "0",
             fontFamily: fonts.body,
             fontSize: "13px",
-            lineHeight: "21px",
-            color: colors.muted,
+            lineHeight: "22px",
+            color: "#A89D8F",
             textAlign: "left",
           }}
         >
-          Open to a quick 10-min chat this week?{" "}
+          Open to a 10-min chat this week?{" "}
           <Link
             href={customWaUrl}
-            style={{ color: colors.accentBright, fontWeight: 700, textDecoration: "underline" }}
+            style={{ color: "#F0B45A", fontWeight: 700, textDecoration: "none" }}
           >
-            Message me on WhatsApp
+            WhatsApp me directly →
           </Link>{" "}
           or explore{" "}
           <Link
             href={brand.portfolioUrl}
-            style={{ color: colors.text, fontWeight: 700, textDecoration: "underline" }}
+            style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}
           >
             206+ projects on arz-portfolio.me
           </Link>
@@ -749,7 +810,7 @@ StrategicClientPitch.PreviewProps = {
   contactGreeting: "أهلاً أ. خالد رضا نمرة",
   sector: "برمجيات SaaS وERP",
   trackLabel: "شركات التقنية والبرمجيات",
-  digitalFootprintSummary: "منظومة getnamra.com وNamra ERP وNamra IQ (+687 عميل في 7 دول عربية)",
+  digitalFootprintSummary: "منظومة getnamra.com وNamra ERP وNamra IQ (+687 عميل في 7 دول)",
   scientificProblem:
     "الزائر التجاري يقرأ 20% فقط من النصوص، وتسجيلات الشاشة التقليدية لمنتجات ERP تفقد الانتباه خلال أول 8 ثوانٍ وتطيل دورة المبيعات في الخليج.",
   scientificSolution:
