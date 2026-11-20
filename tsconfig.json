@@ -11,6 +11,6 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["emails/**/*.ts", "emails/**/*.tsx"],
+  "include": ["emails/**/*.ts", "emails/**/*.tsx", "scripts/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -1,4 +1,4 @@
-export { arzTheme } from "./theme";
+export { arzTheme, ARZ_PACKAGES, type ArzPackageSpec } from "./theme";
 export { ArzLayout, type ArzLayoutProps } from "./components/ArzLayout";
 export {
   ProjectInquiryConfirmation,
@@ -12,3 +12,7 @@ export {
   DeliveryHandover,
   type DeliveryHandoverProps,
 } from "./delivery-handover";
+export {
+  StrategicClientPitch,
+  type StrategicClientPitchProps,
+} from "./strategic-client-pitch";
