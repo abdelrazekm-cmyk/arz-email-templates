@@ -8,18 +8,18 @@ import {
   Text,
 } from "@react-email/components";
 import { ArzLayout } from "./components/ArzLayout";
-import { ARZ_PACKAGES, arzTheme, type ArzPackageSpec } from "./theme";
+import { arzTheme, type ArzPackageSpec } from "./theme";
 
 export interface StrategicClientPitchProps {
   companyName: string;
   contactGreeting: string;
-  sector: string;
+  sector?: string;
   trackLabel?: string;
   digitalFootprintSummary?: string;
   scientificProblem: string;
-  scientificSolution: string;
+  scientificSolution?: string;
   expectedImpact?: string;
-  packageId: ArzPackageSpec["id"];
+  packageId?: ArzPackageSpec["id"];
   secondaryPackageId?: ArzPackageSpec["id"];
   englishSummary?: {
     greeting: string;
@@ -30,32 +30,31 @@ export interface StrategicClientPitchProps {
 }
 
 /**
- * Simple, Natural Egyptian Arabic B2B Pitch Template (v5)
- * - Logo only in header + subtle flat "EN" / "AR" link (no arrows, no bulky pills)
- * - Conversational Egyptian Arabic (no stiff corporate phrasing, no stats clutter)
- * - 3 compact mini-player video cards (Manarat 950K, Tamer Hosny Dubai, DaVinci Coloring)
+ * Simple, Natural Egyptian Arabic B2B Pitch Template (v6)
+ * - Open, non-pushy positioning (flexible video formats & packages, Egypt & international clients)
+ * - Full-width stacked Video Players (950K+ views Manarat, Tamer Hosny Dubai, DaVinci Coloring)
  * - Clean buttons: WhatsApp 10-min call, View All Packages, View All Work
  */
 export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
   companyName,
   contactGreeting,
   scientificProblem,
-  scientificSolution,
-  packageId,
   englishSummary,
 }) => {
   const { fonts, brand, featuredProjects } = arzTheme;
-  const pkg = ARZ_PACKAGES[packageId];
 
   const customWaUrl = `https://wa.me/201014673393?text=${encodeURIComponent(
     `أهلاً يا عبدالرازق، شفت الإيميل الخاص بـ ${companyName} وحابب نتكلم 10 دقايق بخصوص الفيديوهات.`
   )}`;
 
+  const flexibleSolutionAr =
+    "نقدر نشتغل سوا على أنواع فيديوهات مختلفة حسب اللي يناسب شغلكم ويعكس القيمة الحقيقية اللي بتقدموها — من غير ما نلزمكم بشكل واحد. وعندنا باقات مختلفة تناسب كل احتياج، واشتغلنا قبل كده مع أكتر من حد جوة وبرة مصر.";
+
   const en = englishSummary ?? {
     greeting: `Hi ${companyName} team,`,
-    hook: `I checked out your website and social pages — great work so far. I'm Abdelrazek, a video editor & DaVinci Resolve colorist based in Mansoura, and I noticed one simple way video can bring you more clients.`,
-    problem: `Most people scroll past text-heavy posts and plain edits within seconds before seeing how good your service really is.`,
-    solution: `Clean, scroll-stopping videos with cinema-grade color and crisp motion — delivered fast right here in Mansoura without Cairo agency overhead.`,
+    hook: `I checked out your work and pages — really liked what you're building. I'm Abdelrazek, a video editor and DaVinci Resolve colorist working with clients across Egypt and abroad.`,
+    problem: `Most people scroll past text-heavy posts before they ever get to see the real quality behind what you offer.`,
+    solution: `We can work together on different styles of videos tailored to what fits your brand best and truly reflects the quality you deliver — with flexible packages to match any scope.`,
   };
 
   return (
@@ -81,8 +80,8 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             textAlign: "right",
           }}
         >
-          فيديوهات <span style={{ color: "#DB9B3E" }}>تخطف العين</span> — وتجيب
-          عملاء لـ {companyName}
+          فيديوهات <span style={{ color: "#DB9B3E" }}>تخطف العين</span> — وتعكس
+          شغل {companyName} الحقيقي
         </Heading>
 
         <Text
@@ -109,11 +108,12 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
         >
           دخلت على شغلكم وصفحاتكم وعجبني اللي بتقدموه جداً. أنا عبدالرازق، شغال
           في التصوير والمونتاج وتلوين{" "}
-          <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong> هنا في
-          المنصورة، ولفتت نظري حاجة بسيطة تقدر تفرق معاكم جامد في المبيعات:
+          <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong>، واشتغلت
+          مع أكتر من شركة وبراند جوة وبرة مصر — ولفتت نظري حاجة بسيطة تقدر تفرق
+          معاكم:
         </Text>
 
-        {/* Clean Egyptian Arabic Problem + Solution Card */}
+        {/* Clean Egyptian Arabic Problem + Open Flexible Solution Card */}
         <table
           role="presentation"
           width="100%"
@@ -126,7 +126,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             border: "1px solid #2E2318",
             borderRight: "3px solid #DB9B3E",
             borderRadius: "14px",
-            marginBottom: "26px",
+            marginBottom: "28px",
           }}
         >
           <tbody>
@@ -171,7 +171,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                     textAlign: "right",
                   }}
                 >
-                  إزاي نقدر نحلها سوا
+                  إزاي نقدر نشتغل سوا
                 </Text>
                 <Text
                   style={{
@@ -182,46 +182,68 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                     textAlign: "right",
                   }}
                 >
-                  {scientificSolution}
+                  {flexibleSolutionAr}
                 </Text>
               </td>
             </tr>
           </tbody>
         </table>
 
-        {/* COMPACT 3 MINI VIDEO PLAYERS (950K, Tamer Hosny, DaVinci Coloring) */}
+        {/* FULL-WIDTH STACKED VIDEO PLAYERS */}
         <Text
           style={{
-            margin: "0 0 12px",
-            fontSize: "14px",
+            margin: "0 0 14px",
+            fontSize: "15px",
             fontWeight: 800,
             color: "#F5EFE7",
             textAlign: "right",
           }}
         >
-          نماذج سريعة من شغلي (اضغط على أي فيديو عشان يشتغل)
+          نماذج سريعة من شغلي
         </Text>
 
-        <table
-          role="presentation"
-          width="100%"
-          cellPadding={0}
-          cellSpacing={0}
-          border={0}
-          style={{ width: "100%", marginBottom: "26px" }}
-        >
-          <tbody>
-            <tr>
-              {featuredProjects.map((proj, idx) => (
+        {featuredProjects.map((proj) => (
+          <table
+            key={proj.id}
+            role="presentation"
+            width="100%"
+            cellPadding={0}
+            cellSpacing={0}
+            border={0}
+            style={{
+              width: "100%",
+              backgroundColor: "#120E0B",
+              border: "1px solid #2F2419",
+              borderRadius: "14px",
+              overflow: "hidden",
+              marginBottom: "16px",
+            }}
+          >
+            <tbody>
+              <tr>
+                <td>
+                  <Link href={proj.watchUrl} style={{ textDecoration: "none", display: "block" }}>
+                    <Img
+                      src={proj.thumbUrl}
+                      alt={proj.titleAr}
+                      width="564"
+                      height="317"
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        display: "block",
+                      }}
+                    />
+                  </Link>
+                </td>
+              </tr>
+              <tr>
                 <td
-                  key={proj.id}
-                  className="arz-col-3"
-                  valign="top"
+                  dir="rtl"
                   style={{
-                    width: "33.33%",
-                    paddingLeft: idx === featuredProjects.length - 1 ? "0" : "8px",
-                    paddingRight: idx === 0 ? "0" : "4px",
-                    verticalAlign: "top",
+                    padding: "12px 16px",
+                    backgroundColor: "#1A140F",
+                    borderTop: "1px solid #2B2117",
                   }}
                 >
                   <table
@@ -230,145 +252,48 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                     cellPadding={0}
                     cellSpacing={0}
                     border={0}
-                    style={{
-                      width: "100%",
-                      backgroundColor: "#1C1610",
-                      border: "1px solid #2D2218",
-                      borderRadius: "12px",
-                      overflow: "hidden",
-                    }}
                   >
                     <tbody>
                       <tr>
-                        <td>
-                          <Link href={proj.watchUrl} style={{ textDecoration: "none" }}>
-                            <Img
-                              src={proj.thumbUrl}
-                              alt={proj.titleAr}
-                              width="175"
-                              height="92"
-                              style={{
-                                width: "100%",
-                                height: "92px",
-                                objectFit: "cover",
-                                display: "block",
-                              }}
-                            />
-                          </Link>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td
-                          dir="rtl"
-                          style={{
-                            padding: "8px 10px 10px",
-                            direction: "rtl",
-                            textAlign: "right",
-                          }}
-                        >
+                        <td align="right" style={{ verticalAlign: "middle" }}>
                           <Link
                             href={proj.watchUrl}
                             style={{
-                              display: "block",
-                              fontSize: "12px",
-                              lineHeight: "18px",
-                              fontWeight: 700,
+                              fontSize: "14px",
+                              fontWeight: 800,
                               color: "#F5EFE7",
                               textDecoration: "none",
-                              textAlign: "right",
                             }}
                           >
-                            ▶ {proj.titleAr}
+                            <span style={{ color: "#DB9B3E", marginLeft: "8px" }}>▶</span>
+                            {proj.titleAr}
                           </Link>
-                          <Text
+                        </td>
+                        <td align="left" style={{ verticalAlign: "middle", whiteSpace: "nowrap" }}>
+                          <span
                             style={{
-                              margin: "2px 0 0",
-                              fontSize: "10px",
-                              color: "#A89D8F",
-                              textAlign: "right",
+                              display: "inline-block",
+                              backgroundColor: "#281F17",
+                              border: "1px solid #4A3722",
+                              borderRadius: "999px",
+                              padding: "3px 10px",
+                              fontFamily: fonts.mono,
+                              fontSize: "11px",
+                              fontWeight: 700,
+                              color: "#F0B45A",
                             }}
                           >
-                            {proj.tagAr}
-                          </Text>
+                            {proj.badgeAr}
+                          </span>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-
-        {/* Recommended Package (Simple & Clean — No Clutter) */}
-        <table
-          role="presentation"
-          width="100%"
-          cellPadding={0}
-          cellSpacing={0}
-          border={0}
-          style={{
-            width: "100%",
-            backgroundColor: "#1C1610",
-            border: "1px solid #35281B",
-            borderTop: "2px solid #DB9B3E",
-            borderRadius: "14px",
-            marginBottom: "26px",
-          }}
-        >
-          <tbody>
-            <tr>
-              <td
-                dir="rtl"
-                style={{
-                  padding: "18px 20px",
-                  direction: "rtl",
-                  textAlign: "right",
-                }}
-              >
-                <Text
-                  style={{
-                    margin: "0 0 4px",
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    color: "#DB9B3E",
-                    textAlign: "right",
-                  }}
-                >
-                  الباقة المناسبة ليكم
-                </Text>
-                <Text
-                  style={{
-                    margin: "0 0 12px",
-                    fontSize: "17px",
-                    fontWeight: 800,
-                    color: "#F5EFE7",
-                    textAlign: "right",
-                  }}
-                >
-                  {pkg.nameAr}
-                </Text>
-                {pkg.deliverablesAr.map((item, idx) => (
-                  <Text
-                    key={item}
-                    style={{
-                      margin: idx === pkg.deliverablesAr.length - 1 ? "0" : "0 0 6px",
-                      fontSize: "13px",
-                      lineHeight: "22px",
-                      color: "#DDD4C8",
-                      textAlign: "right",
-                    }}
-                  >
-                    <span style={{ color: "#DB9B3E", marginLeft: "8px", fontWeight: 800 }}>
-                      ✓
-                    </span>
-                    {item}
-                  </Text>
-                ))}
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </tr>
+            </tbody>
+          </table>
+        ))}
 
         {/* Clean Action Buttons */}
         <table
@@ -377,7 +302,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           cellPadding={0}
           cellSpacing={0}
           border={0}
-          style={{ width: "100%", marginBottom: "8px" }}
+          style={{ width: "100%", marginTop: "24px", marginBottom: "8px" }}
         >
           <tbody>
             <tr>
@@ -512,7 +437,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             textAlign: "left",
           }}
         >
-          Videos that stop the scroll — for{" "}
+          Videos that reflect the real quality of{" "}
           <span style={{ color: "#DB9B3E" }}>{companyName}</span>
         </Heading>
 
@@ -550,7 +475,8 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             textAlign: "left",
           }}
         >
-          <strong style={{ color: "#F0B45A" }}>How we fix it:</strong> {en.solution}
+          <strong style={{ color: "#F0B45A" }}>How we can work together:</strong>{" "}
+          {en.solution}
         </Text>
 
         <Text
@@ -574,14 +500,14 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             href={brand.packagesUrl}
             style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}
           >
-            View Packages
+            View All Packages
           </Link>
           &nbsp;&nbsp;·&nbsp;&nbsp;
           <Link
             href={brand.portfolioUrl}
             style={{ color: "#A89D8F", fontWeight: 700, textDecoration: "none" }}
           >
-            View Portfolio
+            View All Work
           </Link>
         </Text>
       </div>
@@ -592,12 +518,8 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
 StrategicClientPitch.PreviewProps = {
   companyName: "Namra Tech",
   contactGreeting: "أهلاً أ. خالد",
-  sector: "SaaS & ERP",
   scientificProblem:
-    "أغلب الناس دلوقتي ما بتقراش كلام طويل على الموقع، وفيديوهات تسجيل الشاشة العادية بتخلي العميل يزهق في أول كام ثانية قبل ما يفهم قد إيه السيستم بتاعكم قوي.",
-  scientificSolution:
-    "نعمل فيديو موشن سريع يشرح السيستم ببساطة وحركة شيك، مع 3 إعلانات قصيرة تخطف العين وتجيبلك طلبات ديمو أكتر من مصر والخليج.",
-  packageId: "P6",
+    "أغلب الناس دلوقتي ما بتقراش كلام طويل على الموقع، والفيديوهات العادية بتخلي العميل يقلب بسرعة قبل ما يفهم قد إيه شغلكم قوي.",
 } satisfies StrategicClientPitchProps;
 
 export default StrategicClientPitch;
