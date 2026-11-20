@@ -18,7 +18,6 @@ export interface ArzLayoutProps {
   dir?: "ltr" | "rtl";
   lang?: string;
   timecode?: string;
-  /** Kept optional for backward compatibility with existing templates */
   formatLabel?: string;
   showAvailability?: boolean;
   langToggleHref?: string;
@@ -64,16 +63,6 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
           fontWeight={400}
           fontStyle="normal"
         />
-        <Font
-          fontFamily="Bricolage Grotesque"
-          fallbackFontFamily="Helvetica"
-          webFont={{
-            url: "https://fonts.gstatic.com/s/bricolagegrotesque/v7/3y9U6as8bTXq_nANBjzKo3IeZx8z6up5BeSl5jBNz_19Ppbp.woff2",
-            format: "woff2",
-          }}
-          fontWeight={700}
-          fontStyle="normal"
-        />
         <style>{`
           body, table, td, p, a {
             -webkit-text-size-adjust: 100%;
@@ -91,48 +80,26 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
             text-decoration: none;
           }
           @media only screen and (max-width: 620px) {
-            .arz-outer {
-              padding: 12px 8px !important;
-            }
-            .arz-shell {
-              width: 100% !important;
-              max-width: 100% !important;
-              border-radius: 16px !important;
-            }
-            .arz-pad {
-              padding: 24px 20px !important;
-            }
-            .arz-topbar {
-              padding: 16px 20px !important;
-            }
-            .arz-h1 {
-              font-size: 24px !important;
-              line-height: 34px !important;
-            }
+            .arz-outer { padding: 12px 8px !important; }
+            .arz-shell { width: 100% !important; max-width: 100% !important; border-radius: 16px !important; }
+            .arz-pad { padding: 24px 18px !important; }
+            .arz-topbar { padding: 16px 18px !important; }
+            .arz-h1 { font-size: 22px !important; line-height: 32px !important; }
             .arz-col-3, .arz-col-2 {
               display: block !important;
               width: 100% !important;
               max-width: 100% !important;
               padding-left: 0 !important;
               padding-right: 0 !important;
-              padding-bottom: 14px !important;
+              padding-bottom: 12px !important;
               box-sizing: border-box !important;
-            }
-            .arz-stat-cell {
-              display: inline-block !important;
-              width: 48% !important;
-              padding: 8px 0 !important;
-              vertical-align: top !important;
             }
             .arz-cta {
               display: block !important;
               width: 100% !important;
               box-sizing: border-box !important;
               text-align: center !important;
-            }
-            .arz-thumb {
-              width: 100% !important;
-              height: auto !important;
+              margin-bottom: 10px !important;
             }
           }
         `}</style>
@@ -161,36 +128,32 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
         >
           <tbody>
             <tr>
-              <td
-                align="center"
-                className="arz-outer"
-                style={{ padding: "32px 14px" }}
-              >
+              <td align="center" className="arz-outer" style={{ padding: "28px 12px" }}>
                 <table
                   role="presentation"
                   className="arz-shell"
-                  width="640"
+                  width="620"
                   cellPadding={0}
                   cellSpacing={0}
                   border={0}
                   style={{
                     width: "100%",
-                    maxWidth: "640px",
+                    maxWidth: "620px",
                     margin: "0 auto",
                     backgroundColor: "#15110D",
                     border: "1px solid #2A2118",
-                    borderRadius: "24px",
+                    borderRadius: "22px",
                     overflow: "hidden",
                   }}
                 >
                   <tbody>
-                    {/* Single Minimal Editorial Top Bar */}
+                    {/* Ultra-Clean Top Bar: Logo ONLY + Subtle Flat EN/AR Text */}
                     <tr>
                       <td
                         className="arz-topbar"
                         dir={dir}
                         style={{
-                          padding: "20px 32px",
+                          padding: "18px 28px",
                           backgroundColor: "#120E0B",
                           borderBottom: "1px solid #251D15",
                         }}
@@ -210,67 +173,35 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                               >
                                 <Link
                                   href={brand.portfolioUrl}
-                                  style={{ textDecoration: "none" }}
+                                  style={{ textDecoration: "none", display: "inline-block" }}
                                 >
                                   <Img
                                     src={brand.logoMarkUrl}
                                     alt="ARZ"
-                                    width="40"
-                                    height="20"
-                                    style={{
-                                      display: "inline-block",
-                                      verticalAlign: "middle",
-                                    }}
+                                    width="44"
+                                    height="22"
+                                    style={{ display: "block" }}
                                   />
-                                  <span
-                                    style={{
-                                      display: "inline-block",
-                                      verticalAlign: "middle",
-                                      marginRight: isRtl ? "10px" : "0",
-                                      marginLeft: isRtl ? "0" : "10px",
-                                      fontFamily: fonts.display,
-                                      fontSize: "15px",
-                                      fontWeight: 800,
-                                      letterSpacing: "0.08em",
-                                      color: "#F5EFE7",
-                                    }}
-                                  >
-                                    ARZ
-                                  </span>
                                 </Link>
                               </td>
                               <td
                                 align={isRtl ? "left" : "right"}
                                 style={{ verticalAlign: "middle" }}
                               >
-                                {langToggleHref && langToggleLabel ? (
+                                {langToggleHref && langToggleLabel && (
                                   <Link
                                     href={langToggleHref}
                                     style={{
-                                      display: "inline-block",
-                                      backgroundColor: "#1F1812",
-                                      border: "1px solid #3D2E1E",
-                                      borderRadius: "999px",
-                                      padding: "5px 14px",
                                       fontFamily: fonts.body,
-                                      fontSize: "11px",
-                                      fontWeight: 700,
-                                      color: "#F0B45A",
+                                      fontSize: "12px",
+                                      fontWeight: 600,
+                                      letterSpacing: "0.08em",
+                                      color: "#A89D8F",
                                       textDecoration: "none",
                                     }}
                                   >
                                     {langToggleLabel}
                                   </Link>
-                                ) : (
-                                  <span
-                                    style={{
-                                      fontFamily: fonts.mono,
-                                      fontSize: "11px",
-                                      color: "#756A5D",
-                                    }}
-                                  >
-                                    <span style={{ color: "#E5484D" }}>●</span> REC · ARZ
-                                  </span>
                                 )}
                               </td>
                             </tr>
@@ -279,13 +210,13 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                       </td>
                     </tr>
 
-                    {/* Main Body */}
+                    {/* Content */}
                     <tr>
                       <td
                         className="arz-pad"
                         dir={dir}
                         style={{
-                          padding: "36px 32px 28px",
+                          padding: "32px 28px 24px",
                           direction: dir,
                           textAlign: isRtl ? "right" : "left",
                         }}
@@ -296,7 +227,7 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
 
                     {/* Minimal Signature Footer */}
                     <tr>
-                      <td style={{ padding: "0 32px" }}>
+                      <td style={{ padding: "0 28px" }}>
                         <Hr
                           style={{
                             borderColor: "#251D15",
@@ -311,7 +242,7 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                         className="arz-pad"
                         dir={dir}
                         style={{
-                          padding: "24px 32px 30px",
+                          padding: "22px 28px 26px",
                           backgroundColor: "#120E0B",
                           direction: dir,
                           textAlign: isRtl ? "right" : "left",
@@ -320,20 +251,19 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                         <Text
                           style={{
                             margin: "0 0 4px",
-                            fontFamily: isRtl ? fonts.arabic : fonts.display,
-                            fontSize: "15px",
-                            fontWeight: 800,
+                            fontFamily: isRtl ? fonts.arabic : fonts.body,
+                            fontSize: "14px",
+                            fontWeight: 700,
                             color: "#F5EFE7",
                             textAlign: isRtl ? "right" : "left",
                           }}
                         >
-                          {isRtl ? `${brand.ownerAr} — ARZ` : `${brand.owner} — ARZ`}
+                          {isRtl ? brand.ownerAr : brand.owner}
                         </Text>
                         <Text
                           style={{
-                            margin: "0 0 12px",
+                            margin: "0 0 10px",
                             fontSize: "12px",
-                            lineHeight: "20px",
                             color: "#A89D8F",
                             textAlign: isRtl ? "right" : "left",
                           }}
@@ -347,25 +277,10 @@ export const ArzLayout: React.FC<ArzLayoutProps> = ({
                           style={{
                             margin: "0",
                             fontSize: "12px",
-                            lineHeight: "22px",
                             color: "#756A5D",
                             textAlign: isRtl ? "right" : "left",
                           }}
                         >
-                          <Link
-                            href={brand.portfolioUrl}
-                            style={{ color: "#F5EFE7", textDecoration: "none", fontWeight: 700 }}
-                          >
-                            {isRtl ? "معرض الأعمال" : "Portfolio"}
-                          </Link>
-                          &nbsp;&nbsp;·&nbsp;&nbsp;
-                          <Link
-                            href={brand.packagesUrl}
-                            style={{ color: "#F0B45A", textDecoration: "none", fontWeight: 700 }}
-                          >
-                            {isRtl ? "الباقات والأسعار" : "Packages"}
-                          </Link>
-                          &nbsp;&nbsp;·&nbsp;&nbsp;
                           <Link
                             href={brand.whatsappDirectUrl}
                             style={{ color: "#A89D8F", textDecoration: "none" }}

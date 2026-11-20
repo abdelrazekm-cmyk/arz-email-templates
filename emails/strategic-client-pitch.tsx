@@ -14,11 +14,11 @@ export interface StrategicClientPitchProps {
   companyName: string;
   contactGreeting: string;
   sector: string;
-  trackLabel: string;
-  digitalFootprintSummary: string;
+  trackLabel?: string;
+  digitalFootprintSummary?: string;
   scientificProblem: string;
   scientificSolution: string;
-  expectedImpact: string;
+  expectedImpact?: string;
   packageId: ArzPackageSpec["id"];
   secondaryPackageId?: ArzPackageSpec["id"];
   englishSummary?: {
@@ -26,90 +26,65 @@ export interface StrategicClientPitchProps {
     hook: string;
     problem: string;
     solution: string;
-    impact: string;
   };
 }
 
 /**
- * Minimal Luxury Editorial B2B Pitch Template (AIDA + PAS)
- * - Clean, breathable layout — zero clutter, zero top portrait photo
- * - 3-column visual filmstrip portfolio showcase (stacks cleanly on mobile)
- * - Refined espresso & gold palette matching arz-portfolio.me
- * - Strict RTL Arabic top + In-email LTR English section (#en-version)
+ * Simple, Natural Egyptian Arabic B2B Pitch Template (v5)
+ * - Logo only in header + subtle flat "EN" / "AR" link (no arrows, no bulky pills)
+ * - Conversational Egyptian Arabic (no stiff corporate phrasing, no stats clutter)
+ * - 3 compact mini-player video cards (Manarat 950K, Tamer Hosny Dubai, DaVinci Coloring)
+ * - Clean buttons: WhatsApp 10-min call, View All Packages, View All Work
  */
 export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
   companyName,
   contactGreeting,
-  sector,
-  digitalFootprintSummary,
   scientificProblem,
   scientificSolution,
-  expectedImpact,
   packageId,
-  secondaryPackageId,
   englishSummary,
 }) => {
-  const { fonts, brand, metrics, featuredProjects } = arzTheme;
+  const { fonts, brand, featuredProjects } = arzTheme;
   const pkg = ARZ_PACKAGES[packageId];
-  const secondaryPkg = secondaryPackageId ? ARZ_PACKAGES[secondaryPackageId] : null;
-  const formatEgp = (n: number) => `${n.toLocaleString("en-US")} ج.م`;
-  const formatEgpEn = (n: number) => `${n.toLocaleString("en-US")} EGP`;
 
   const customWaUrl = `https://wa.me/201014673393?text=${encodeURIComponent(
-    `أهلاً أستاذ عبدالرازق، شفت الإيميل الخاص بـ ${companyName} وحابب نرتّب مكالمة 10 دقائق بخصوص ${pkg.nameAr} (${pkg.id}).`
+    `أهلاً يا عبدالرازق، شفت الإيميل الخاص بـ ${companyName} وحابب نتكلم 10 دقايق بخصوص الفيديوهات.`
   )}`;
 
   const en = englishSummary ?? {
     greeting: `Hi ${companyName} team,`,
-    hook: `I reviewed your digital presence and noticed a clear opportunity to turn more views into qualified leads with cinema-grade video.`,
-    problem: `Static posts and standard edits lose over 70% of attention in the first 3 seconds, driving up ad costs and slowing buyer trust.`,
-    solution: `End-to-end 6K shooting (Nikon ZR + DJI RS 5), DaVinci Resolve color grading, and motion graphics — delivered fast from Mansoura at ${pkg.savePct}% less than Cairo agencies.`,
-    impact: `Higher watch time, stronger brand authority, and faster 72h campaign turnarounds.`,
+    hook: `I checked out your website and social pages — great work so far. I'm Abdelrazek, a video editor & DaVinci Resolve colorist based in Mansoura, and I noticed one simple way video can bring you more clients.`,
+    problem: `Most people scroll past text-heavy posts and plain edits within seconds before seeing how good your service really is.`,
+    solution: `Clean, scroll-stopping videos with cinema-grade color and crisp motion — delivered fast right here in Mansoura without Cairo agency overhead.`,
   };
 
   return (
     <ArzLayout
       dir="rtl"
       lang="ar"
-      previewText={`فكرة بصرية لـ ${companyName} — ${pkg.nameAr} (توفير ${pkg.savePct}% عن القاهرة)`}
+      previewText={`فكرة بسيطة للفيديوهات عند ${companyName}`}
       langToggleHref="#en-version"
-      langToggleLabel="English ↓"
+      langToggleLabel="EN"
     >
-      {/* ===================== ARABIC EDITORIAL SECTION (RTL) ===================== */}
+      {/* ===================== ARABIC SECTION (NATURAL EGYPTIAN RTL) ===================== */}
       <div id="ar-version" dir="rtl" style={{ direction: "rtl", textAlign: "right" }}>
-        {/* Subtle Gold Kicker */}
-        <Text
-          style={{
-            margin: "0 0 10px",
-            fontFamily: fonts.arabic,
-            fontSize: "12px",
-            fontWeight: 700,
-            color: "#DB9B3E",
-            textAlign: "right",
-          }}
-        >
-          ● {sector}
-        </Text>
-
-        {/* Clean Editorial Display Headline (No Photo Clutter) */}
         <Heading
           as="h1"
           className="arz-h1"
           style={{
             margin: "0 0 18px",
             fontFamily: fonts.arabic,
-            fontSize: "28px",
-            lineHeight: "38px",
+            fontSize: "26px",
+            lineHeight: "36px",
             fontWeight: 800,
             color: "#F5EFE7",
             textAlign: "right",
           }}
         >
-          فيديوهات <span style={{ color: "#DB9B3E" }}>توقف الـ Scroll</span> —
-          وتضاعف عملاء {companyName}
+          فيديوهات <span style={{ color: "#DB9B3E" }}>تخطف العين</span> — وتجيب
+          عملاء لـ {companyName}
         </Heading>
 
-        {/* Warm, Direct Personal Opener */}
         <Text
           style={{
             margin: "0 0 10px",
@@ -122,22 +97,23 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
         >
           {contactGreeting}،
         </Text>
+
         <Text
           style={{
-            margin: "0 0 26px",
+            margin: "0 0 22px",
             fontSize: "14px",
             lineHeight: "26px",
             color: "#B5AA9C",
             textAlign: "right",
           }}
         >
-          تابعت حضوركم الرقمي ({digitalFootprintSummary})، وكمتخصص في الإخراج
-          والمونتاج وتلوين <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong>{" "}
-          بالمنصورة (+500 فيديو في مصر والخليج)، لفتت نظري نقطة واحدة تقدر ترفع
-          عائد حملاتكم بشكل فوري:
+          دخلت على شغلكم وصفحاتكم وعجبني اللي بتقدموه جداً. أنا عبدالرازق، شغال
+          في التصوير والمونتاج وتلوين{" "}
+          <strong style={{ color: "#F5EFE7" }}>DaVinci Resolve</strong> هنا في
+          المنصورة، ولفتت نظري حاجة بسيطة تقدر تفرق معاكم جامد في المبيعات:
         </Text>
 
-        {/* Single Refined Editorial Insight Card (No Loud Red/Green Boxes) */}
+        {/* Clean Egyptian Arabic Problem + Solution Card */}
         <table
           role="presentation"
           width="100%"
@@ -147,10 +123,10 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           style={{
             width: "100%",
             backgroundColor: "#1C1610",
-            border: "1px solid #2F2419",
+            border: "1px solid #2E2318",
             borderRight: "3px solid #DB9B3E",
             borderRadius: "14px",
-            marginBottom: "30px",
+            marginBottom: "26px",
           }}
         >
           <tbody>
@@ -158,7 +134,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
               <td
                 dir="rtl"
                 style={{
-                  padding: "22px 22px 20px",
+                  padding: "20px",
                   direction: "rtl",
                   textAlign: "right",
                 }}
@@ -166,20 +142,20 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                 <Text
                   style={{
                     margin: "0 0 6px",
-                    fontSize: "11px",
+                    fontSize: "12px",
                     fontWeight: 800,
                     color: "#DB9B3E",
                     textAlign: "right",
                   }}
                 >
-                  01 · الملاحظة البصرية
+                  المشكلة اللي لاحظتها
                 </Text>
                 <Text
                   style={{
                     margin: "0 0 16px",
                     fontSize: "14px",
-                    lineHeight: "24px",
-                    color: "#E8E0D5",
+                    lineHeight: "25px",
+                    color: "#EAE2D7",
                     textAlign: "right",
                   }}
                 >
@@ -189,85 +165,42 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                 <Text
                   style={{
                     margin: "0 0 6px",
-                    fontSize: "11px",
+                    fontSize: "12px",
                     fontWeight: 800,
                     color: "#F0B45A",
                     textAlign: "right",
                   }}
                 >
-                  02 · الحل العملي
+                  إزاي نقدر نحلها سوا
                 </Text>
                 <Text
                   style={{
-                    margin: "0 0 14px",
+                    margin: "0",
                     fontSize: "14px",
-                    lineHeight: "24px",
-                    color: "#E8E0D5",
+                    lineHeight: "25px",
+                    color: "#EAE2D7",
                     textAlign: "right",
                   }}
                 >
                   {scientificSolution}
                 </Text>
-
-                <Text
-                  style={{
-                    margin: "0",
-                    paddingTop: "12px",
-                    borderTop: "1px solid #2C2218",
-                    fontSize: "13px",
-                    lineHeight: "22px",
-                    fontWeight: 700,
-                    color: "#F0B45A",
-                    textAlign: "right",
-                  }}
-                >
-                  النتيجة المتوقعة: {expectedImpact}
-                </Text>
               </td>
             </tr>
           </tbody>
         </table>
 
-        {/* PORTFOLIO FILMSTRIP SHOWCASE (Clean 3-Column Editorial Grid) */}
-        <table
-          role="presentation"
-          width="100%"
-          cellPadding={0}
-          cellSpacing={0}
-          border={0}
-          style={{ width: "100%", marginBottom: "14px" }}
+        {/* COMPACT 3 MINI VIDEO PLAYERS (950K, Tamer Hosny, DaVinci Coloring) */}
+        <Text
+          style={{
+            margin: "0 0 12px",
+            fontSize: "14px",
+            fontWeight: 800,
+            color: "#F5EFE7",
+            textAlign: "right",
+          }}
         >
-          <tbody>
-            <tr>
-              <td align="right" style={{ verticalAlign: "baseline" }}>
-                <Text
-                  style={{
-                    margin: "0",
-                    fontSize: "14px",
-                    fontWeight: 800,
-                    color: "#F5EFE7",
-                    textAlign: "right",
-                  }}
-                >
-                  نماذج من أعمال ARZ
-                </Text>
-              </td>
-              <td align="left" style={{ verticalAlign: "baseline" }}>
-                <Link
-                  href={brand.portfolioUrl}
-                  style={{
-                    fontSize: "12px",
-                    fontWeight: 700,
-                    color: "#DB9B3E",
-                    textDecoration: "none",
-                  }}
-                >
-                  شاهد +206 فيديو ←
-                </Link>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+          نماذج سريعة من شغلي (اضغط على أي فيديو عشان يشتغل)
+        </Text>
 
         <table
           role="presentation"
@@ -275,7 +208,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           cellPadding={0}
           cellSpacing={0}
           border={0}
-          style={{ width: "100%", marginBottom: "28px" }}
+          style={{ width: "100%", marginBottom: "26px" }}
         >
           <tbody>
             <tr>
@@ -310,14 +243,13 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                         <td>
                           <Link href={proj.watchUrl} style={{ textDecoration: "none" }}>
                             <Img
-                              className="arz-thumb"
                               src={proj.thumbUrl}
                               alt={proj.titleAr}
-                              width="180"
-                              height="102"
+                              width="175"
+                              height="92"
                               style={{
                                 width: "100%",
-                                height: "102px",
+                                height: "92px",
                                 objectFit: "cover",
                                 display: "block",
                               }}
@@ -329,22 +261,11 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                         <td
                           dir="rtl"
                           style={{
-                            padding: "10px 10px 12px",
+                            padding: "8px 10px 10px",
                             direction: "rtl",
                             textAlign: "right",
                           }}
                         >
-                          <Text
-                            style={{
-                              margin: "0 0 4px",
-                              fontSize: "10px",
-                              fontWeight: 800,
-                              color: "#F0B45A",
-                              textAlign: "right",
-                            }}
-                          >
-                            ▶ {proj.badgeAr}
-                          </Text>
                           <Link
                             href={proj.watchUrl}
                             style={{
@@ -357,8 +278,18 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                               textAlign: "right",
                             }}
                           >
-                            {proj.titleAr}
+                            ▶ {proj.titleAr}
                           </Link>
+                          <Text
+                            style={{
+                              margin: "2px 0 0",
+                              fontSize: "10px",
+                              color: "#A89D8F",
+                              textAlign: "right",
+                            }}
+                          >
+                            {proj.tagAr}
+                          </Text>
                         </td>
                       </tr>
                     </tbody>
@@ -369,58 +300,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           </tbody>
         </table>
 
-        {/* Minimal Hairline Proof Strip */}
-        <table
-          role="presentation"
-          width="100%"
-          cellPadding={0}
-          cellSpacing={0}
-          border={0}
-          style={{
-            width: "100%",
-            borderTop: "1px solid #261E16",
-            borderBottom: "1px solid #261E16",
-            marginBottom: "28px",
-          }}
-        >
-          <tbody>
-            <tr>
-              {metrics.map((m) => (
-                <td
-                  key={m.label}
-                  className="arz-stat-cell"
-                  align="center"
-                  style={{ width: "25%", padding: "14px 4px", textAlign: "center" }}
-                >
-                  <Text
-                    style={{
-                      margin: "0 0 2px",
-                      fontFamily: fonts.display,
-                      fontSize: "18px",
-                      fontWeight: 800,
-                      color: "#F0B45A",
-                      textAlign: "center",
-                    }}
-                  >
-                    {m.value}
-                  </Text>
-                  <Text
-                    style={{
-                      margin: "0",
-                      fontSize: "11px",
-                      color: "#8F8477",
-                      textAlign: "center",
-                    }}
-                  >
-                    {m.labelAr}
-                  </Text>
-                </td>
-              ))}
-            </tr>
-          </tbody>
-        </table>
-
-        {/* Luxury Minimal Package Block */}
+        {/* Recommended Package (Simple & Clean — No Clutter) */}
         <table
           role="presentation"
           width="100%"
@@ -432,8 +312,8 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             backgroundColor: "#1C1610",
             border: "1px solid #35281B",
             borderTop: "2px solid #DB9B3E",
-            borderRadius: "16px",
-            marginBottom: "28px",
+            borderRadius: "14px",
+            marginBottom: "26px",
           }}
         >
           <tbody>
@@ -441,79 +321,38 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
               <td
                 dir="rtl"
                 style={{
-                  padding: "22px 24px",
+                  padding: "18px 20px",
                   direction: "rtl",
                   textAlign: "right",
                 }}
               >
-                <table
-                  role="presentation"
-                  width="100%"
-                  cellPadding={0}
-                  cellSpacing={0}
-                  border={0}
-                  style={{ width: "100%", marginBottom: "14px" }}
+                <Text
+                  style={{
+                    margin: "0 0 4px",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    color: "#DB9B3E",
+                    textAlign: "right",
+                  }}
                 >
-                  <tbody>
-                    <tr>
-                      <td className="arz-col-2" align="right" style={{ verticalAlign: "top" }}>
-                        <Text
-                          style={{
-                            margin: "0 0 2px",
-                            fontFamily: fonts.mono,
-                            fontSize: "11px",
-                            fontWeight: 700,
-                            color: "#DB9B3E",
-                            textAlign: "right",
-                          }}
-                        >
-                          الباقة الأنسب لكم · {pkg.id}
-                        </Text>
-                        <Text
-                          style={{
-                            margin: "0",
-                            fontSize: "19px",
-                            fontWeight: 800,
-                            color: "#F5EFE7",
-                            textAlign: "right",
-                          }}
-                        >
-                          {pkg.nameAr}
-                        </Text>
-                      </td>
-                      <td className="arz-col-2" align="left" style={{ verticalAlign: "top" }}>
-                        <Text
-                          style={{
-                            margin: "0",
-                            fontSize: "21px",
-                            fontWeight: 800,
-                            color: "#F0B45A",
-                            textAlign: "left",
-                          }}
-                        >
-                          {formatEgp(pkg.priceEgp)}
-                        </Text>
-                        <Text
-                          style={{
-                            margin: "2px 0 0",
-                            fontSize: "11px",
-                            fontWeight: 700,
-                            color: "#8AD99B",
-                            textAlign: "left",
-                          }}
-                        >
-                          توفير {pkg.savePct}% عن القاهرة ({formatEgp(pkg.cairoAvgEgp)})
-                        </Text>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-
+                  الباقة المناسبة ليكم
+                </Text>
+                <Text
+                  style={{
+                    margin: "0 0 12px",
+                    fontSize: "17px",
+                    fontWeight: 800,
+                    color: "#F5EFE7",
+                    textAlign: "right",
+                  }}
+                >
+                  {pkg.nameAr}
+                </Text>
                 {pkg.deliverablesAr.map((item, idx) => (
                   <Text
                     key={item}
                     style={{
-                      margin: idx === pkg.deliverablesAr.length - 1 ? "0" : "0 0 8px",
+                      margin: idx === pkg.deliverablesAr.length - 1 ? "0" : "0 0 6px",
                       fontSize: "13px",
                       lineHeight: "22px",
                       color: "#DDD4C8",
@@ -526,31 +365,12 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                     {item}
                   </Text>
                 ))}
-
-                {secondaryPkg && (
-                  <Text
-                    style={{
-                      margin: "14px 0 0",
-                      paddingTop: "12px",
-                      borderTop: "1px solid #2B2117",
-                      fontSize: "12px",
-                      color: "#A89D8F",
-                      textAlign: "right",
-                    }}
-                  >
-                    خيار إضافي للتوسع:{" "}
-                    <strong style={{ color: "#F0B45A" }}>
-                      {secondaryPkg.nameAr} ({secondaryPkg.id}) —{" "}
-                      {formatEgp(secondaryPkg.priceEgp)}
-                    </strong>
-                  </Text>
-                )}
               </td>
             </tr>
           </tbody>
         </table>
 
-        {/* Single Crisp Primary CTA */}
+        {/* Clean Action Buttons */}
         <table
           role="presentation"
           width="100%"
@@ -561,7 +381,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
         >
           <tbody>
             <tr>
-              <td align="center" style={{ textAlign: "center" }}>
+              <td align="center" style={{ textAlign: "center", paddingBottom: "10px" }}>
                 <Button
                   className="arz-cta"
                   href={customWaUrl}
@@ -569,50 +389,69 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                     backgroundColor: "#DB9B3E",
                     color: "#140E05",
                     fontFamily: fonts.arabic,
-                    fontSize: "15px",
+                    fontSize: "14px",
                     fontWeight: 800,
                     textDecoration: "none",
-                    padding: "14px 34px",
+                    padding: "13px 28px",
                     borderRadius: "999px",
                     display: "inline-block",
                   }}
                 >
-                  احجز مكالمة 10 دقائق على واتساب ←
+                  احجز مكالمة 10 دقايق على واتساب
                 </Button>
-                <Text
+              </td>
+            </tr>
+            <tr>
+              <td align="center" style={{ textAlign: "center" }}>
+                <Button
+                  className="arz-cta"
+                  href={brand.packagesUrl}
                   style={{
-                    margin: "14px 0 0",
+                    backgroundColor: "#1F1812",
+                    color: "#F0B45A",
+                    border: "1px solid #3D2E1E",
+                    fontFamily: fonts.arabic,
                     fontSize: "13px",
-                    color: "#A89D8F",
-                    textAlign: "center",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    padding: "10px 20px",
+                    borderRadius: "999px",
+                    display: "inline-block",
+                    marginLeft: "8px",
                   }}
                 >
-                  <Link
-                    href={brand.packagesUrl}
-                    style={{ color: "#F0B45A", fontWeight: 700, textDecoration: "none" }}
-                  >
-                    استعرض كل الباقات والحاسبة التفاعلية
-                  </Link>
-                  &nbsp;&nbsp;·&nbsp;&nbsp;
-                  <Link
-                    href={brand.portfolioUrl}
-                    style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}
-                  >
-                    تصفح معرض الأعمال
-                  </Link>
-                </Text>
+                  استعرض كل الباقات
+                </Button>
+                <Button
+                  className="arz-cta"
+                  href={brand.portfolioUrl}
+                  style={{
+                    backgroundColor: "#1F1812",
+                    color: "#F5EFE7",
+                    border: "1px solid #35281B",
+                    fontFamily: fonts.arabic,
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    textDecoration: "none",
+                    padding: "10px 20px",
+                    borderRadius: "999px",
+                    display: "inline-block",
+                  }}
+                >
+                  شوف كل الشغل
+                </Button>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
 
-      {/* ===================== IN-EMAIL ENGLISH VERSION (LTR) ===================== */}
+      {/* ===================== IN-EMAIL ENGLISH SECTION (LTR) ===================== */}
       <Hr
         style={{
           borderColor: "#2A2118",
           borderTop: "1px solid #2A2118",
-          margin: "34px 0 26px",
+          margin: "32px 0 24px",
         }}
       />
 
@@ -623,7 +462,7 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           cellPadding={0}
           cellSpacing={0}
           border={0}
-          style={{ width: "100%", marginBottom: "16px" }}
+          style={{ width: "100%", marginBottom: "14px" }}
         >
           <tbody>
             <tr>
@@ -631,34 +470,30 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
                 <Text
                   style={{
                     margin: "0",
-                    fontFamily: fonts.mono,
+                    fontFamily: fonts.body,
                     fontSize: "11px",
                     fontWeight: 700,
-                    letterSpacing: "0.1em",
+                    letterSpacing: "0.08em",
                     color: "#DB9B3E",
                     textAlign: "left",
                   }}
                 >
-                  ENGLISH VERSION · ARZ
+                  ENGLISH
                 </Text>
               </td>
               <td align="right" style={{ verticalAlign: "middle" }}>
                 <Link
                   href="#ar-version"
                   style={{
-                    display: "inline-block",
-                    backgroundColor: "#1F1812",
-                    border: "1px solid #3D2E1E",
-                    borderRadius: "999px",
-                    padding: "4px 12px",
-                    fontFamily: fonts.arabic,
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    color: "#F0B45A",
+                    fontFamily: fonts.body,
+                    fontSize: "12px",
+                    fontWeight: 600,
+                    letterSpacing: "0.08em",
+                    color: "#A89D8F",
                     textDecoration: "none",
                   }}
                 >
-                  النسخة العربية ↑
+                  AR
                 </Link>
               </td>
             </tr>
@@ -670,30 +505,29 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
           style={{
             margin: "0 0 10px",
             fontFamily: fonts.display,
-            fontSize: "21px",
-            lineHeight: "29px",
+            fontSize: "20px",
+            lineHeight: "28px",
             fontWeight: 800,
             color: "#F5EFE7",
             textAlign: "left",
           }}
         >
-          Videos that <span style={{ color: "#DB9B3E" }}>stop the scroll</span>{" "}
-          — for {companyName}
+          Videos that stop the scroll — for{" "}
+          <span style={{ color: "#DB9B3E" }}>{companyName}</span>
         </Heading>
 
         <Text
           style={{
-            margin: "0 0 12px",
+            margin: "0 0 10px",
             fontFamily: fonts.body,
             fontSize: "14px",
-            lineHeight: "23px",
+            lineHeight: "22px",
             color: "#D8CFC3",
             textAlign: "left",
           }}
         >
           {en.greeting} {en.hook}
         </Text>
-
         <Text
           style={{
             margin: "0 0 8px",
@@ -704,12 +538,11 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             textAlign: "left",
           }}
         >
-          <strong style={{ color: "#F5EFE7" }}>The Gap:</strong> {en.problem}
+          <strong style={{ color: "#F5EFE7" }}>What I noticed:</strong> {en.problem}
         </Text>
-
         <Text
           style={{
-            margin: "0 0 18px",
+            margin: "0 0 16px",
             fontFamily: fonts.body,
             fontSize: "13px",
             lineHeight: "21px",
@@ -717,62 +550,8 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             textAlign: "left",
           }}
         >
-          <strong style={{ color: "#F0B45A" }}>The Fix:</strong> {en.solution}{" "}
-          {en.impact}
+          <strong style={{ color: "#F0B45A" }}>How we fix it:</strong> {en.solution}
         </Text>
-
-        <table
-          role="presentation"
-          width="100%"
-          cellPadding={0}
-          cellSpacing={0}
-          border={0}
-          style={{
-            width: "100%",
-            backgroundColor: "#1C1610",
-            border: "1px solid #2E2318",
-            borderRadius: "12px",
-            marginBottom: "16px",
-          }}
-        >
-          <tbody>
-            <tr>
-              <td dir="ltr" style={{ padding: "16px 18px", textAlign: "left" }}>
-                <Text
-                  style={{
-                    margin: "0 0 8px",
-                    fontFamily: fonts.display,
-                    fontSize: "14px",
-                    fontWeight: 700,
-                    color: "#F5EFE7",
-                    textAlign: "left",
-                  }}
-                >
-                  Recommended: {pkg.id} — {pkg.nameEn}{" "}
-                  <span style={{ color: "#F0B45A" }}>
-                    ({formatEgpEn(pkg.priceEgp)} · Save {pkg.savePct}% vs. Cairo)
-                  </span>
-                </Text>
-                {pkg.deliverablesEn.map((item) => (
-                  <Text
-                    key={item}
-                    style={{
-                      margin: "0 0 4px",
-                      fontFamily: fonts.body,
-                      fontSize: "12px",
-                      lineHeight: "19px",
-                      color: "#B5AA9C",
-                      textAlign: "left",
-                    }}
-                  >
-                    <span style={{ color: "#DB9B3E", marginRight: "6px" }}>✓</span>
-                    {item}
-                  </Text>
-                ))}
-              </td>
-            </tr>
-          </tbody>
-        </table>
 
         <Text
           style={{
@@ -784,21 +563,26 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
             textAlign: "left",
           }}
         >
-          Open to a 10-min chat this week?{" "}
           <Link
             href={customWaUrl}
             style={{ color: "#F0B45A", fontWeight: 700, textDecoration: "none" }}
           >
-            WhatsApp me directly →
-          </Link>{" "}
-          or explore{" "}
+            Book a 10-min WhatsApp call
+          </Link>
+          &nbsp;&nbsp;·&nbsp;&nbsp;
           <Link
-            href={brand.portfolioUrl}
+            href={brand.packagesUrl}
             style={{ color: "#F5EFE7", fontWeight: 700, textDecoration: "none" }}
           >
-            206+ projects on arz-portfolio.me
+            View Packages
           </Link>
-          .
+          &nbsp;&nbsp;·&nbsp;&nbsp;
+          <Link
+            href={brand.portfolioUrl}
+            style={{ color: "#A89D8F", fontWeight: 700, textDecoration: "none" }}
+          >
+            View Portfolio
+          </Link>
         </Text>
       </div>
     </ArzLayout>
@@ -806,19 +590,14 @@ export const StrategicClientPitch: React.FC<StrategicClientPitchProps> = ({
 };
 
 StrategicClientPitch.PreviewProps = {
-  companyName: "Namra Tech (نمرة تك)",
-  contactGreeting: "أهلاً أ. خالد رضا نمرة",
-  sector: "برمجيات SaaS وERP",
-  trackLabel: "شركات التقنية والبرمجيات",
-  digitalFootprintSummary: "منظومة getnamra.com وNamra ERP وNamra IQ (+687 عميل في 7 دول)",
+  companyName: "Namra Tech",
+  contactGreeting: "أهلاً أ. خالد",
+  sector: "SaaS & ERP",
   scientificProblem:
-    "الزائر التجاري يقرأ 20% فقط من النصوص، وتسجيلات الشاشة التقليدية لمنتجات ERP تفقد الانتباه خلال أول 8 ثوانٍ وتطيل دورة المبيعات في الخليج.",
+    "أغلب الناس دلوقتي ما بتقراش كلام طويل على الموقع، وفيديوهات تسجيل الشاشة العادية بتخلي العميل يزهق في أول كام ثانية قبل ما يفهم قد إيه السيستم بتاعكم قوي.",
   scientificSolution:
-    "فيديو UI Motion Explainer مدته 60–90 ثانية يشرح قيمة Namra ERP وNamra IQ بوضوح + 3 إعلانات أداء قصيرة مختبرة الخطافات موجهة لصناع القرار بالسعودية والخليج.",
-  expectedImpact:
-    "رفع طلبات الـ Demo وتقليل تكلفة الاستحواذ (CPA) بنسبة 25%–40% بدون تعطيل فريقك.",
+    "نعمل فيديو موشن سريع يشرح السيستم ببساطة وحركة شيك، مع 3 إعلانات قصيرة تخطف العين وتجيبلك طلبات ديمو أكتر من مصر والخليج.",
   packageId: "P6",
-  secondaryPackageId: "P7",
 } satisfies StrategicClientPitchProps;
 
 export default StrategicClientPitch;
