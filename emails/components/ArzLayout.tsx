@@ -21,6 +21,8 @@ export interface ArzLayoutProps {
   dir?: "ltr" | "rtl";
   lang?: string;
   timecode?: string;
+  /** Kept optional for backward compatibility with existing templates */
+  formatLabel?: string;
   showAvailability?: boolean;
   /** Optional in-email anchor button (e.g. jump to #en-version without leaving email) */
   langToggleHref?: string;
