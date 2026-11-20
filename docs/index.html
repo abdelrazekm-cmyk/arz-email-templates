@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ARZ Email Template — Live Preview</title>
+  <title>ARZ Email Template — Live Preview (EN First + AR Mirror)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
   <style>
     * { box-sizing: border-box; }
-    body { margin: 0; background: #070605; color: #F5EFE7; font-family: "Cairo", system-ui, sans-serif; }
+    body { margin: 0; background: #070605; color: #F5EFE7; font-family: "Inter", system-ui, sans-serif; }
     .toolbar {
       position: sticky; top: 0; z-index: 40;
       display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
@@ -20,54 +20,61 @@
     .tb-btns { display: flex; gap: 8px; }
     .tb-btn {
       background: #1F1812; color: #F5EFE7; border: 1px solid #3A2C1D; border-radius: 999px;
-      padding: 5px 14px; font-family: "Cairo", sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;
+      padding: 5px 14px; font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; cursor: pointer;
     }
     .tb-btn.active { background: #DB9B3E; color: #140E05; border-color: #DB9B3E; }
-    .stage { padding: 24px 12px 48px; display: flex; justify-content: center; }
-    .frame { width: 100%; max-width: 640px; transition: max-width 0.25s ease; }
+    .stage { padding: 20px 12px 48px; display: flex; justify-content: center; }
+    .frame { width: 100%; max-width: 720px; transition: max-width 0.25s ease; }
     .frame.mobile { max-width: 390px; }
     .email-shell {
-      width: 100%; background: #15110D; border: 1px solid #2A2118; border-radius: 22px; overflow: hidden;
+      width: 100%; background: #15110D; border: 1px solid #2A2118; border-radius: 20px; overflow: hidden;
       box-shadow: 0 24px 60px rgba(0,0,0,0.55);
     }
     .topbar {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between; direction: ltr;
       padding: 18px 28px; background: #120E0B; border-bottom: 1px solid #251D15;
     }
-    .lang-flat {
-      background: none; border: none; padding: 4px 2px; cursor: pointer;
-      font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-      color: #A89D8F;
+    .lang-switch { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; letter-spacing: 0.08em; }
+    .lang-btn {
+      background: none; border: none; padding: 2px; cursor: pointer;
+      font-family: "Inter", sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #756A5D;
     }
-    .lang-flat:hover { color: #F0B45A; }
+    .lang-btn.active { color: #F0B45A; font-weight: 800; }
+    .lang-sep { color: #3A2C1E; }
     .pad { padding: 32px 28px 26px; }
-    h1 { margin: 0 0 16px; font-size: 26px; line-height: 1.4; font-weight: 800; color: #F5EFE7; }
-    .accent { color: #DB9B3E; }
-    .lead { margin: 0 0 22px; font-size: 14px; line-height: 1.85; color: #B5AA9C; }
+    .ar-mode { direction: rtl; text-align: right; font-family: "Cairo", system-ui, sans-serif; }
+    .en-mode { direction: ltr; text-align: left; font-family: "Inter", system-ui, sans-serif; }
+    h1 { margin: 0 0 18px; font-size: clamp(21px, 3.2vw, 27px); line-height: 1.38; font-weight: 800; color: #F5EFE7; }
+    .en-mode h1 { font-family: "Bricolage Grotesque", sans-serif; letter-spacing: -0.015em; }
+    .brand-nowrap { color: #DB9B3E; white-space: nowrap; display: inline-block; }
+    .lead { margin: 0 0 22px; font-size: 14px; line-height: 1.8; color: #B5AA9C; }
     .insight {
-      background: #1C1610; border: 1px solid #2E2318; border-right: 3px solid #DB9B3E;
-      border-radius: 14px; padding: 20px; margin-bottom: 28px;
+      background: #1C1610; border: 1px solid #2E2318; border-radius: 14px; padding: 20px; margin-bottom: 22px;
     }
-    .en-mode .insight { border-right: 1px solid #2E2318; border-left: 3px solid #DB9B3E; }
+    .en-mode .insight { border-left: 3px solid #DB9B3E; }
+    .ar-mode .insight { border-right: 3px solid #DB9B3E; }
     .insight-lbl { margin: 0 0 6px; font-size: 12px; font-weight: 800; color: #DB9B3E; }
-    .insight-txt { margin: 0 0 16px; font-size: 14px; line-height: 1.8; color: #EAE2D7; }
-    .insight-txt:last-child { margin-bottom: 0; }
+    .insight-txt { margin: 0 0 14px; font-size: 14px; line-height: 1.75; color: #EAE2D7; }
+    .btn-inline {
+      display: inline-block; background: #261E16; color: #F0B45A; border: 1px solid #4A3722;
+      font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 999px; text-decoration: none;
+    }
+    .why-box {
+      background: #19140E; border: 1px solid #2D2218; border-radius: 14px; padding: 20px; margin-bottom: 26px;
+    }
+    .why-title { margin: 0 0 12px; font-size: 15px; font-weight: 800; color: #F5EFE7; }
+    .why-item { margin: 0 0 8px; font-size: 13px; line-height: 1.75; color: #DDD4C8; }
+    .why-item:last-child { margin-bottom: 0; }
+    .why-item span { color: #DB9B3E; font-weight: 800; margin-inline-end: 8px; }
     .sec-title { margin: 0 0 14px; font-size: 15px; font-weight: 800; color: #F5EFE7; }
 
-    /* Full-Width Stacked Cinema Video Player */
     .vplayer {
       width: 100%; background: #120E0B; border: 1px solid #2F2419; border-radius: 16px;
       overflow: hidden; margin-bottom: 18px; transition: border-color 0.2s;
     }
     .vplayer:hover { border-color: #DB9B3E; }
-    .vstage {
-      position: relative; width: 100%; padding-top: 56.25%; background: #000; cursor: pointer; overflow: hidden;
-    }
-    .vstage img {
-      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block;
-      transition: transform 0.35s ease, opacity 0.25s ease; opacity: 0.85;
-    }
-    .vplayer:hover .vstage img { transform: scale(1.02); opacity: 0.95; }
+    .vstage { position: relative; width: 100%; padding-top: 56.25%; background: #000; cursor: pointer; overflow: hidden; }
+    .vstage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; opacity: 0.86; }
     .vstage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .vgrad {
       position: absolute; inset: 0;
@@ -79,37 +86,25 @@
       background: rgba(18, 14, 11, 0.86); border: 1px solid rgba(219, 155, 62, 0.55);
       border-radius: 999px; padding: 4px 12px;
       font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: #F0B45A;
-      backdrop-filter: blur(6px);
     }
     .vplay {
       position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
       width: 58px; height: 58px; border-radius: 50%;
       background: rgba(219, 155, 62, 0.94); color: #140E05;
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; font-weight: 900; padding-left: 3px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      transition: transform 0.2s ease, background 0.2s ease;
+      font-size: 20px; font-weight: 900; padding-left: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
-    .vplayer:hover .vplay { transform: translate(-50%, -50%) scale(1.08); background: #F0B45A; }
-    .vcontrols {
-      position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
-      padding: 10px 14px; pointer-events: none;
-    }
+    .vcontrols { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; padding: 10px 14px; pointer-events: none; }
     .vbar { width: 100%; height: 3px; background: rgba(255,255,255,0.22); border-radius: 99px; overflow: hidden; margin-bottom: 6px; }
     .vbar-fill { width: 28%; height: 100%; background: #DB9B3E; border-radius: 99px; }
-    .vmeta-row {
-      display: flex; align-items: center; justify-content: space-between;
-      font-family: ui-monospace, monospace; font-size: 11px; color: #E8E0D5;
-    }
+    .vmeta-row { display: flex; align-items: center; justify-content: space-between; font-family: ui-monospace, monospace; font-size: 11px; color: #E8E0D5; }
     .vbar-footer {
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       padding: 12px 16px; background: #1A140F; border-top: 1px solid #2B2117;
     }
     .vtitle { font-size: 14px; font-weight: 800; color: #F5EFE7; }
-    .vviews {
-      font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: #F0B45A;
-      white-space: nowrap;
-    }
+    .vcat { font-size: 11px; color: #A89D8F; margin-top: 2px; }
+    .vviews { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; color: #F0B45A; white-space: nowrap; }
 
     .btns-wrap { text-align: center; margin-top: 26px; }
     .btn-primary {
@@ -122,19 +117,19 @@
       font-size: 13px; font-weight: 700; padding: 10px 20px; border-radius: 999px; text-decoration: none;
     }
     .btn-sec.neutral { color: #F5EFE7; border-color: #35281B; }
-    .footer { padding: 22px 28px 26px; background: #120E0B; border-top: 1px solid #251D15; }
+    .footer {
+      padding: 22px 28px 26px; background: #120E0B; border-top: 1px solid #251D15;
+      direction: ltr; text-align: left; font-family: "Inter", sans-serif;
+    }
     .hidden { display: none !important; }
-    .en-mode { direction: ltr; text-align: left; font-family: "Inter", sans-serif; }
-    .en-mode h1 { font-family: "Bricolage Grotesque", sans-serif; }
     .frame.mobile .pad { padding: 24px 16px; }
     .frame.mobile .topbar { padding: 16px 18px; }
-    .frame.mobile h1 { font-size: 22px; }
     .frame.mobile .btn-primary, .frame.mobile .btn-sec { display: block; width: 100%; text-align: center; }
   </style>
 </head>
 <body>
   <div class="toolbar">
-    <div class="tb-title">ARZ Email Preview</div>
+    <div class="tb-title">ARZ Email Preview (Responsive)</div>
     <div class="tb-btns">
       <button class="tb-btn active" id="btnDesktop" onclick="setView('desktop')">Desktop</button>
       <button class="tb-btn" id="btnMobile" onclick="setView('mobile')">Mobile</button>
@@ -143,103 +138,38 @@
 
   <div class="stage">
     <div class="frame" id="frame">
-      <div class="email-shell" id="shell">
+      <div class="email-shell">
         <div class="topbar">
           <a href="https://arz-portfolio.me/" target="_blank" style="display:inline-block;">
             <img src="https://arz-portfolio.me/assets/logo-mark.png" alt="ARZ" width="44" height="22" style="display:block;" />
           </a>
-          <button class="lang-flat" id="langBtn" onclick="toggleLang()">EN</button>
-        </div>
-
-        <!-- ARABIC CONTENT -->
-        <div class="pad" id="arContent">
-          <h1>فيديوهات <span class="accent">تخطف العين</span> — وتعكس شغل Namra Tech الحقيقي</h1>
-          <p style="margin:0 0 10px;font-size:15px;font-weight:700;">أهلاً أ. خالد،</p>
-          <p class="lead">دخلت على شغلكم وصفحاتكم وعجبني اللي بتقدموه جداً. أنا عبدالرازق، شغال في التصوير والمونتاج وتلوين <strong style="color:#F5EFE7">DaVinci Resolve</strong>، واشتغلت مع أكتر من شركة وبراند جوة وبرة مصر — ولفتت نظري حاجة بسيطة تقدر تفرق معاكم:</p>
-
-          <div class="insight">
-            <p class="insight-lbl">المشكلة اللي لاحظتها</p>
-            <p class="insight-txt">أغلب الناس دلوقتي ما بتقراش كلام طويل على الموقع، والفيديوهات العادية بتخلي العميل يقلب بسرعة قبل ما يفهم قد إيه شغلكم قوي.</p>
-            <p class="insight-lbl" style="color:#F0B45A;">إزاي نقدر نشتغل سوا</p>
-            <p class="insight-txt">نقدر نشتغل سوا على أنواع فيديوهات مختلفة حسب اللي يناسب شغلكم ويعكس القيمة الحقيقية اللي بتقدموها — من غير ما نلزمكم بشكل واحد. وعندنا باقات مختلفة تناسب كل احتياج، واشتغلنا قبل كده مع أكتر من حد جوة وبرة مصر.</p>
-          </div>
-
-          <p class="sec-title">نماذج سريعة من شغلي</p>
-
-          <!-- Full-Width Player 1: 950K+ Views -->
-          <div class="vplayer">
-            <div class="vstage" onclick="playInline(this, 'DiKWeWKRjUU')">
-              <img src="https://i.ytimg.com/vi/DiKWeWKRjUU/hqdefault.jpg" alt="منارات المدينة" />
-              <div class="vgrad"></div>
-              <div class="vbadge">950K+ views</div>
-              <div class="vplay">▶</div>
-              <div class="vcontrols">
-                <div class="vbar"><div class="vbar-fill"></div></div>
-                <div class="vmeta-row"><span>00:00 / 01:57</span><span>4K · HD</span></div>
-              </div>
-            </div>
-            <div class="vbar-footer">
-              <div class="vtitle">منارات المدينة — قصة نجاح طالب</div>
-              <div class="vviews">950K+ views</div>
-            </div>
-          </div>
-
-          <!-- Full-Width Player 2: Tamer Hosny Dubai -->
-          <div class="vplayer">
-            <div class="vstage" onclick="playInline(this, 'wbWJ93mq67s')">
-              <img src="https://i.ytimg.com/vi/wbWJ93mq67s/hqdefault.jpg" alt="حفل تامر حسني" />
-              <div class="vgrad"></div>
-              <div class="vbadge">Dubai · Coca-Cola Arena</div>
-              <div class="vplay">▶</div>
-              <div class="vcontrols">
-                <div class="vbar"><div class="vbar-fill" style="width:42%"></div></div>
-                <div class="vmeta-row"><span>00:00 / 02:12</span><span>4K · HD</span></div>
-              </div>
-            </div>
-            <div class="vbar-footer">
-              <div class="vtitle">حفل تامر حسني — كوكاكولا أرينا دبي</div>
-              <div class="vviews">Live Concert</div>
-            </div>
-          </div>
-
-          <!-- Full-Width Player 3: DaVinci Coloring -->
-          <div class="vplayer">
-            <div class="vstage" onclick="playInline(this, 'iUH9WgUy54A')">
-              <img src="https://i.ytimg.com/vi/iUH9WgUy54A/hqdefault.jpg" alt="تلوين DaVinci Resolve" />
-              <div class="vgrad"></div>
-              <div class="vbadge">DaVinci Resolve · Coloring</div>
-              <div class="vplay">▶</div>
-              <div class="vcontrols">
-                <div class="vbar"><div class="vbar-fill" style="width:55%"></div></div>
-                <div class="vmeta-row"><span>00:00 / 00:11</span><span>S-Log3 → Rec.709</span></div>
-              </div>
-            </div>
-            <div class="vbar-footer">
-              <div class="vtitle">تلوين DaVinci Resolve — قبل وبعد</div>
-              <div class="vviews">Color Grading</div>
-            </div>
-          </div>
-
-          <div class="btns-wrap">
-            <a class="btn-primary" href="https://wa.me/201014673393" target="_blank">احجز مكالمة 10 دقايق على واتساب</a>
-            <div class="btns-row">
-              <a class="btn-sec" href="https://arz-portfolio.me/#pricing" target="_blank">استعرض كل الباقات</a>
-              <a class="btn-sec neutral" href="https://arz-portfolio.me/" target="_blank">شوف كل الشغل</a>
-            </div>
+          <div class="lang-switch">
+            <button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
+            <span class="lang-sep">|</span>
+            <button class="lang-btn" id="btnAr" onclick="setLang('ar')">AR</button>
           </div>
         </div>
 
-        <!-- ENGLISH CONTENT -->
-        <div class="pad hidden" id="enContent">
-          <h1>Videos that reflect the <span class="accent">real quality</span> of Namra Tech</h1>
+        <!-- 1. ENGLISH CONTENT FIRST (DEFAULT OPEN) -->
+        <div class="pad en-mode" id="enContent">
+          <h1>Scroll-stopping videos that reflect the real work of <span class="brand-nowrap">Namra Tech</span></h1>
           <p style="margin:0 0 10px;font-size:15px;font-weight:700;">Hi Khaled,</p>
-          <p class="lead">I checked out your work and pages — really liked what you're building. I'm Abdelrazek, a video editor &amp; <strong style="color:#F5EFE7">DaVinci Resolve</strong> colorist working with clients across Egypt and abroad:</p>
+          <p class="lead">I checked out your work and pages — really liked what you're building. I'm Abdelrazek, a video editor &amp; <strong style="color:#F5EFE7">DaVinci Resolve</strong> colorist, and I noticed one simple thing that could make a big difference:</p>
 
           <div class="insight">
             <p class="insight-lbl">What I noticed</p>
-            <p class="insight-txt">Most people scroll past text-heavy posts and plain clips before they ever get to see how strong your product really is.</p>
+            <p class="insight-txt">Most people scroll past long text and plain clips before they ever get to see how strong your work really is.</p>
             <p class="insight-lbl" style="color:#F0B45A;">How we can work together</p>
-            <p class="insight-txt">We can work on different video formats tailored to what fits your brand best and reflects the real value you deliver — with flexible packages for every scope, backed by experience with clients in Egypt and internationally.</p>
+            <p class="insight-txt">We can work together on different styles of videos tailored to what fits your brand best and truly reflects the value you deliver — with flexible packages for every need, backed by experience working with companies across multiple industries in Egypt and abroad.</p>
+            <a class="btn-inline" href="https://arz-portfolio.me/" target="_blank">See Companies We've Worked With</a>
+          </div>
+
+          <div class="why-box">
+            <p class="why-title">Why we're a great fit</p>
+            <p class="why-item"><span>✓</span>500+ delivered videos for brands across Egypt, Saudi Arabia, UAE, and Canada with a 5.0★ client rating.</p>
+            <p class="why-item"><span>✓</span>Proven reach: 950K+ organic views on a single feature, 290K+ on recruitment campaigns, and 100K+ on Dubai real estate promos.</p>
+            <p class="why-item"><span>✓</span>25% faster turnaround via standardized DaVinci Resolve &amp; After Effects pipelines (48–72h delivery available).</p>
+            <p class="why-item"><span>✓</span>One point of contact covering 6K shooting, editing, DaVinci color grading, motion graphics, and sound design.</p>
           </div>
 
           <p class="sec-title">Quick samples of my work</p>
@@ -256,7 +186,10 @@
               </div>
             </div>
             <div class="vbar-footer">
-              <div class="vtitle">Manarat Al-Madinah — Student Story</div>
+              <div>
+                <div class="vtitle">Manarat Al-Madinah — Student Story</div>
+                <div class="vcat">Educational Films &amp; Student Stories</div>
+              </div>
               <div class="vviews">950K+ views</div>
             </div>
           </div>
@@ -265,7 +198,7 @@
             <div class="vstage" onclick="playInline(this, 'wbWJ93mq67s')">
               <img src="https://i.ytimg.com/vi/wbWJ93mq67s/hqdefault.jpg" alt="Tamer Hosny Dubai" />
               <div class="vgrad"></div>
-              <div class="vbadge">Dubai · Coca-Cola Arena</div>
+              <div class="vbadge">Dubai · 7-Day Edit</div>
               <div class="vplay">▶</div>
               <div class="vcontrols">
                 <div class="vbar"><div class="vbar-fill" style="width:42%"></div></div>
@@ -273,8 +206,11 @@
               </div>
             </div>
             <div class="vbar-footer">
-              <div class="vtitle">Tamer Hosny — Coca-Cola Arena Dubai</div>
-              <div class="vviews">Live Concert</div>
+              <div>
+                <div class="vtitle">Tamer Hosny — Coca-Cola Arena Dubai</div>
+                <div class="vcat">Mega Concerts &amp; Festivals</div>
+              </div>
+              <div class="vviews">Dubai Arena</div>
             </div>
           </div>
 
@@ -282,15 +218,18 @@
             <div class="vstage" onclick="playInline(this, 'iUH9WgUy54A')">
               <img src="https://i.ytimg.com/vi/iUH9WgUy54A/hqdefault.jpg" alt="DaVinci Coloring" />
               <div class="vgrad"></div>
-              <div class="vbadge">DaVinci Resolve · Coloring</div>
+              <div class="vbadge">S-Log3 → Rec.709</div>
               <div class="vplay">▶</div>
               <div class="vcontrols">
                 <div class="vbar"><div class="vbar-fill" style="width:55%"></div></div>
-                <div class="vmeta-row"><span>00:00 / 00:11</span><span>S-Log3 → Rec.709</span></div>
+                <div class="vmeta-row"><span>00:00 / 00:11</span><span>DaVinci Resolve</span></div>
               </div>
             </div>
             <div class="vbar-footer">
-              <div class="vtitle">DaVinci Resolve — Before &amp; After Coloring</div>
+              <div>
+                <div class="vtitle">DaVinci Resolve — Before &amp; After</div>
+                <div class="vcat">Color Grading Breakdowns</div>
+              </div>
               <div class="vviews">Color Grading</div>
             </div>
           </div>
@@ -304,15 +243,103 @@
           </div>
         </div>
 
+        <!-- 2. ARABIC CONTENT SECOND (1-TO-1 MIRROR, RTL) -->
+        <div class="pad ar-mode hidden" id="arContent">
+          <h1>فيديوهات تخطف العين — وتعكس شغل <span class="brand-nowrap">Namra Tech</span> الحقيقي</h1>
+          <p style="margin:0 0 10px;font-size:15px;font-weight:700;">أهلاً أ. خالد،</p>
+          <p class="lead">دخلت على شغلكم وصفحاتكم وعجبني اللي بتقدموه جداً. أنا عبدالرازق، شغال في التصوير والمونتاج وتلوين <strong style="color:#F5EFE7">DaVinci Resolve</strong>، ولفتت نظري حاجة بسيطة تقدر تفرق معاكم:</p>
+
+          <div class="insight">
+            <p class="insight-lbl">المشكلة اللي لاحظتها</p>
+            <p class="insight-txt">أغلب الناس دلوقتي ما بتقراش كلام طويل على الموقع، والفيديوهات العادية بتخلي العميل يقلب بسرعة قبل ما يفهم قد إيه شغلكم قوي.</p>
+            <p class="insight-lbl" style="color:#F0B45A;">إزاي نقدر نشتغل سوا</p>
+            <p class="insight-txt">نقدر نشتغل سوا على أنواع فيديوهات مختلفة حسب اللي يناسب شغلكم ويعكس القيمة الحقيقية اللي بتقدموها — من غير ما نلزمكم بشكل واحد. وعندنا باقات مختلفة تناسب كل احتياج، واشتغلنا مع شركات مختلفة في أكتر من مجال جوة وبره مصر.</p>
+            <a class="btn-inline" href="https://arz-portfolio.me/" target="_blank">شوف الشركات اللي اشتغلنا معاها</a>
+          </div>
+
+          <div class="why-box">
+            <p class="why-title">ليه إحنا مناسبين ليكم؟</p>
+            <p class="why-item"><span>✓</span>أكتر من 500 فيديو متسلم لشركات وبراندات في مصر والسعودية والإمارات وكندا بتقييم 5.0★.</p>
+            <p class="why-item"><span>✓</span>نتايج حقيقية بالأرقام: فيديو وصل لأكتر من 950K مشاهدة عضوية، وحملات تعليمية وعقارية عدّت 290K+ و100K+ مشاهدة.</p>
+            <p class="why-item"><span>✓</span>تقليل وقت التسليم بنسبة 25% بنظام شغل منظم في DaVinci Resolve وAfter Effects (وتسليم سريع خلال 48–72 ساعة).</p>
+            <p class="why-item"><span>✓</span>نقطة تواصل واحدة بتغطي كل حاجة (تصوير 6K، مونتاج، تلوين DaVinci، موشن جرافيك، وصوت) من غير تشتيت بين أكتر من شخص.</p>
+          </div>
+
+          <p class="sec-title">نماذج سريعة من شغلي</p>
+
+          <div class="vplayer">
+            <div class="vstage" onclick="playInline(this, 'DiKWeWKRjUU')">
+              <img src="https://i.ytimg.com/vi/DiKWeWKRjUU/hqdefault.jpg" alt="منارات المدينة" />
+              <div class="vgrad"></div>
+              <div class="vbadge">950K+ views</div>
+              <div class="vplay">▶</div>
+              <div class="vcontrols">
+                <div class="vbar"><div class="vbar-fill"></div></div>
+                <div class="vmeta-row"><span>00:00 / 01:57</span><span>4K · HD</span></div>
+              </div>
+            </div>
+            <div class="vbar-footer">
+              <div>
+                <div class="vtitle">منارات المدينة — قصة نجاح طالب</div>
+                <div class="vcat">أفلام تعليمية وقصص نجاح</div>
+              </div>
+              <div class="vviews">950K+ views</div>
+            </div>
+          </div>
+
+          <div class="vplayer">
+            <div class="vstage" onclick="playInline(this, 'wbWJ93mq67s')">
+              <img src="https://i.ytimg.com/vi/wbWJ93mq67s/hqdefault.jpg" alt="حفل تامر حسني" />
+              <div class="vgrad"></div>
+              <div class="vbadge">Dubai · 7-Day Edit</div>
+              <div class="vplay">▶</div>
+              <div class="vcontrols">
+                <div class="vbar"><div class="vbar-fill" style="width:42%"></div></div>
+                <div class="vmeta-row"><span>00:00 / 02:12</span><span>4K · HD</span></div>
+              </div>
+            </div>
+            <div class="vbar-footer">
+              <div>
+                <div class="vtitle">حفل تامر حسني — كوكاكولا أرينا دبي</div>
+                <div class="vcat">حفلات كبرى وفعاليات VIP</div>
+              </div>
+              <div class="vviews">Dubai Arena</div>
+            </div>
+          </div>
+
+          <div class="vplayer">
+            <div class="vstage" onclick="playInline(this, 'iUH9WgUy54A')">
+              <img src="https://i.ytimg.com/vi/iUH9WgUy54A/hqdefault.jpg" alt="تلوين DaVinci Resolve" />
+              <div class="vgrad"></div>
+              <div class="vbadge">S-Log3 → Rec.709</div>
+              <div class="vplay">▶</div>
+              <div class="vcontrols">
+                <div class="vbar"><div class="vbar-fill" style="width:55%"></div></div>
+                <div class="vmeta-row"><span>00:00 / 00:11</span><span>DaVinci Resolve</span></div>
+              </div>
+            </div>
+            <div class="vbar-footer">
+              <div>
+                <div class="vtitle">تلوين DaVinci Resolve — قبل وبعد</div>
+                <div class="vcat">تلوين سينمائي (Color Grading)</div>
+              </div>
+              <div class="vviews">Color Grading</div>
+            </div>
+          </div>
+
+          <div class="btns-wrap">
+            <a class="btn-primary" href="https://wa.me/201014673393" target="_blank">احجز مكالمة 10 دقايق على واتساب</a>
+            <div class="btns-row">
+              <a class="btn-sec" href="https://arz-portfolio.me/#pricing" target="_blank">استعرض كل الباقات</a>
+              <a class="btn-sec neutral" href="https://arz-portfolio.me/" target="_blank">شوف كل الشغل</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER: ALWAYS ENGLISH (LTR) -->
         <div class="footer">
-          <div id="footerAr">
-            <div style="font-size:14px;font-weight:700;color:#F5EFE7;margin-bottom:4px;">عبدالرازق محمود</div>
-            <div style="font-size:12px;color:#A89D8F;margin-bottom:8px;">مونتير سينمائي · تلوين DaVinci Resolve · موشن جرافيك · <span dir="ltr" style="color:#DB9B3E;">+20 101 467 3393</span></div>
-          </div>
-          <div id="footerEn" class="hidden">
-            <div style="font-size:14px;font-weight:700;color:#F5EFE7;margin-bottom:4px;">Abdelrazek Mahmoud</div>
-            <div style="font-size:12px;color:#A89D8F;margin-bottom:8px;">Video Editor · DaVinci Resolve Colorist · Motion Designer · <span style="color:#DB9B3E;">+20 101 467 3393</span></div>
-          </div>
+          <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:15px;font-weight:700;color:#F5EFE7;margin-bottom:4px;">Abdelrazek Mahmoud</div>
+          <div style="font-size:12px;color:#A89D8F;margin-bottom:8px;">Video Editor · DaVinci Resolve Colorist · Motion Designer · <span style="color:#DB9B3E;">+20 101 467 3393</span></div>
           <div style="font-size:12px;color:#756A5D;">
             <a href="https://wa.me/201014673393" target="_blank" style="color:#A89D8F;text-decoration:none;">WhatsApp</a> ·
             <a href="https://www.instagram.com/abdelrazek730/" target="_blank" style="color:#A89D8F;text-decoration:none;">Instagram</a> ·
@@ -324,21 +351,17 @@
   </div>
 
   <script>
-    let currentLang = 'ar';
     function setView(mode) {
       document.getElementById('frame').classList.toggle('mobile', mode === 'mobile');
       document.getElementById('btnDesktop').classList.toggle('active', mode === 'desktop');
       document.getElementById('btnMobile').classList.toggle('active', mode === 'mobile');
     }
-    function toggleLang() {
-      currentLang = currentLang === 'ar' ? 'en' : 'ar';
-      const isEn = currentLang === 'en';
-      document.getElementById('shell').classList.toggle('en-mode', isEn);
-      document.getElementById('arContent').classList.toggle('hidden', isEn);
-      document.getElementById('enContent').classList.toggle('hidden', !isEn);
-      document.getElementById('footerAr').classList.toggle('hidden', isEn);
-      document.getElementById('footerEn').classList.toggle('hidden', !isEn);
-      document.getElementById('langBtn').textContent = isEn ? 'AR' : 'EN';
+    function setLang(lang) {
+      const isAr = lang === 'ar';
+      document.getElementById('enContent').classList.toggle('hidden', isAr);
+      document.getElementById('arContent').classList.toggle('hidden', !isAr);
+      document.getElementById('btnEn').classList.toggle('active', !isAr);
+      document.getElementById('btnAr').classList.toggle('active', isAr);
     }
     function playInline(stageEl, ytId) {
       const isHttpsHost = location.protocol === "https:" && !!location.hostname && location.hostname !== "localhost";
